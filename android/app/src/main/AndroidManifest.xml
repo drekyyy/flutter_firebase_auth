@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.flutter_firebase_auth">
+    package="com.example.flutter_shopping_list">
    <application
-        android:label="flutter_firebase_auth"
+        android:label="flutter_shopping_list"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

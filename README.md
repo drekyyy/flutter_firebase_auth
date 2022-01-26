@@ -1,6 +1,6 @@
 # flutter_shopping_list
 
-A new Flutter project. Shopping list for households where every member of a particular home can suggest what to include in a list.
+A new Flutter project.
 
 ## Getting Started
 
