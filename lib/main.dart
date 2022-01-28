@@ -1,5 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_shopping_list/authentication_service.dart';
+import 'package:flutter_shopping_list/sign_in_page.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_shopping_list/home_page.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -10,17 +15,24 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // is not restarted.
-        primarySwatch: Colors.blue,
-      ),
-      home: AuthenticationWrapper(),
-    );
+    return MultiProvider(
+        providers: [
+          Provider<AuthenticationService>(
+              create: (_) => AuthenticationService(FirebaseAuth.instance)),
+          StreamProvider(
+              create: (context) =>
+                  context.read<AuthenticationService>().authStateChanges,
+              initialData: null)
+        ],
+        child: MaterialApp(
+          title: 'Flutter Demo',
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+          ),
+          home: AuthenticationWrapper(),
+        ));
   }
 }
 
@@ -29,6 +41,10 @@ class AuthenticationWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    final firebaseUser = context.watch<User?>();
+    if (firebaseUser != null) {
+      return const HomePage();
+    }
+    return SignInPage();
   }
 }
