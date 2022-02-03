@@ -27,11 +27,11 @@ class MyApp extends StatelessWidget {
               initialData: null)
         ],
         child: MaterialApp(
-          title: 'Flutter Demo',
+          title: 'Shopping list',
           theme: ThemeData(
-            primarySwatch: Colors.blue,
+            primarySwatch: Colors.green,
           ),
-          home: AuthenticationWrapper(),
+          home: const AuthenticationWrapper(),
         ));
   }
 }

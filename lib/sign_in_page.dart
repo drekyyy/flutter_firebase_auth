@@ -3,7 +3,15 @@ import 'package:flutter_shopping_list/authentication_service.dart';
 import 'package:flutter_shopping_list/sign_up_page.dart';
 import 'package:provider/provider.dart';
 
-class SignInPage extends StatelessWidget {
+class SignInPage extends StatefulWidget {
+  const SignInPage({Key? key}) : super(key: key);
+
+  @override
+  _SignInPageState createState() => _SignInPageState();
+}
+
+class _SignInPageState extends State<SignInPage> {
+  bool _isObscure = true;
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
@@ -15,55 +23,68 @@ class SignInPage extends StatelessWidget {
           backgroundColor: Colors.green.shade200,
         ),
         body: Center(
-            child: Container(
-                margin: const EdgeInsets.all(10),
-                child: ListView(children: [
-                  const SizedBox(height: 50),
-                  TextField(
-                      controller: emailController,
-                      decoration: InputDecoration(
-                          labelText: "Email",
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Colors.green.shade200, width: 2.0)))),
-                  const SizedBox(height: 10),
-                  TextField(
-                      controller: passwordController,
-                      decoration: InputDecoration(
-                          labelText: "Password",
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Colors.green.shade200, width: 2.0)))),
-                  const SizedBox(height: 25),
-                  Container(
-                      margin: const EdgeInsets.only(left: 115, right: 115),
-                      child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              minimumSize: const Size(1, 50),
-                              primary: Colors.green.shade200),
+            child: ListView(
+                // shrinkWrap: true,
+                padding: const EdgeInsets.all(10),
+                children: [
+              const SizedBox(height: 50),
+              TextField(
+                  controller: emailController,
+                  decoration: InputDecoration(
+                      labelText: "Email",
+                      enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Colors.green.shade200, width: 2.0)))),
+              const SizedBox(height: 10),
+              TextField(
+                  obscureText: _isObscure,
+                  controller: passwordController,
+                  decoration: InputDecoration(
+                      labelText: "Password",
+                      suffixIcon: IconButton(
+                          icon: Icon(_isObscure
+                              ? Icons.visibility
+                              : Icons.visibility_off),
                           onPressed: () {
-                            context.read<AuthenticationService>().signIn(
-                                emailController.text.trim(),
-                                passwordController.text.trim());
-                          },
-                          child: const Text("Sign in"))),
-                  const SizedBox(height: 25),
-                  Row(
-                    children: [
-                      const Text("Don't have an account yet?"),
-                      const SizedBox(width: 5),
-                      ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              primary: Colors.green.shade200),
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => SignUpPage()));
-                          },
-                          child: const Text("Sign up here"))
-                    ],
-                  ),
-                ]))));
+                            setState(() {
+                              _isObscure = !_isObscure;
+                            });
+                          }),
+                      enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Colors.green.shade200, width: 2.0)))),
+              const SizedBox(height: 25),
+              Container(
+                  margin: const EdgeInsets.only(left: 115, right: 115),
+                  child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          minimumSize: const Size(1, 50),
+                          primary: Colors.green.shade200),
+                      onPressed: () {
+                        context.read<AuthenticationService>().signIn(
+                            emailController.text.trim(),
+                            passwordController.text.trim());
+                      },
+                      child: const Text("Sign in"))),
+              const SizedBox(height: 35),
+              Center(
+                  child: IntrinsicWidth(
+                      child: Row(
+                children: [
+                  const Text("Don't have an account yet?"),
+                  const SizedBox(width: 10),
+                  ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          primary: Colors.green.shade200),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SignUpPage()));
+                      },
+                      child: const Text("Sign up here"))
+                ],
+              ))),
+            ])));
   }
 }
