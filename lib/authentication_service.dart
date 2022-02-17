@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
 class AuthenticationService {
   final FirebaseAuth _firebaseAuth;
@@ -16,6 +19,9 @@ class AuthenticationService {
           email: email, password: password);
       return "Signed in";
     } on FirebaseAuthException catch (e) {
+      var emsg;
+      if (e.message != null) emsg = e.message;
+      log(emsg);
       return e.message;
     }
   }

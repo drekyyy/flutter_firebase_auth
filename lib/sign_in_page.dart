@@ -1,3 +1,5 @@
+import 'dart:developer';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_shopping_list/authentication_service.dart';
 import 'package:flutter_shopping_list/sign_up_page.dart';
@@ -11,6 +13,7 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> {
+  dynamic firebaseResponse = "";
   bool _isObscure = true;
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -54,18 +57,31 @@ class _SignInPageState extends State<SignInPage> {
                           borderSide: BorderSide(
                               color: Colors.green.shade200, width: 2.0)))),
               const SizedBox(height: 25),
+              Center(
+                  child: Text(firebaseResponse.toString(),
+                      style: const TextStyle(color: Colors.red),
+                      textAlign: TextAlign.center)),
+              const SizedBox(height: 25),
               Container(
                   margin: const EdgeInsets.only(left: 115, right: 115),
                   child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                           minimumSize: const Size(1, 50),
                           primary: Colors.green.shade200),
-                      onPressed: () {
-                        context.read<AuthenticationService>().signIn(
-                            emailController.text.trim(),
-                            passwordController.text.trim());
+                      onPressed: () async {
+                        firebaseResponse = await context
+                            .read<AuthenticationService>()
+                            .signIn(emailController.text.trim(),
+                                passwordController.text.trim());
+                        setState(() {
+                          if (firebaseResponse ==
+                              'Given String is empty or null') {
+                            firebaseResponse = 'Email or password missing.';
+                          }
+                        });
                       },
                       child: const Text("Sign in"))),
+              const SizedBox(height: 35),
               const SizedBox(height: 35),
               Center(
                   child: IntrinsicWidth(
@@ -80,7 +96,7 @@ class _SignInPageState extends State<SignInPage> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => SignUpPage()));
+                                builder: (context) => const SignUpPage()));
                       },
                       child: const Text("Sign up here"))
                 ],

@@ -11,6 +11,7 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+  dynamic firebaseResponse = "";
   bool _isObscure = true;
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -53,6 +54,29 @@ class _SignUpPageState extends State<SignUpPage> {
                       enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                               color: Colors.green.shade200, width: 2.0)))),
+              const SizedBox(height: 10),
+              TextField(
+                  obscureText: _isObscure,
+                  controller: passwordController,
+                  decoration: InputDecoration(
+                      labelText: "Confirm Password",
+                      suffixIcon: IconButton(
+                          icon: Icon(_isObscure
+                              ? Icons.visibility
+                              : Icons.visibility_off),
+                          onPressed: () {
+                            setState(() {
+                              _isObscure = !_isObscure;
+                            });
+                          }),
+                      enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Colors.green.shade200, width: 2.0)))),
+              const SizedBox(height: 25),
+              Center(
+                  child: Text(firebaseResponse.toString(),
+                      style: const TextStyle(color: Colors.red),
+                      textAlign: TextAlign.center)),
               const SizedBox(height: 25),
               Container(
                   margin: const EdgeInsets.only(left: 115, right: 115),
@@ -60,10 +84,17 @@ class _SignUpPageState extends State<SignUpPage> {
                       style: ElevatedButton.styleFrom(
                           minimumSize: const Size(1, 50),
                           primary: Colors.green.shade200),
-                      onPressed: () {
-                        context.read<AuthenticationService>().signIn(
-                            emailController.text.trim(),
-                            passwordController.text.trim());
+                      onPressed: () async {
+                        firebaseResponse = await context
+                            .read<AuthenticationService>()
+                            .signUp(emailController.text.trim(),
+                                passwordController.text.trim());
+                        setState(() {
+                          if (firebaseResponse ==
+                              'Given String is empty or null') {
+                            firebaseResponse = 'Email or password missing.';
+                          }
+                        });
                       },
                       child: const Text("Sign up"))),
               const SizedBox(height: 35),
