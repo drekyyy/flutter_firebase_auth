@@ -10,12 +10,12 @@ class HomePage extends StatelessWidget {
     return Scaffold(
         body: Center(
             child: Column(children: [
-      Text("Home"),
+      const Text("Home"),
       ElevatedButton(
           onPressed: () {
             context.read<AuthenticationService>().signOut();
           },
-          child: Text("Sign out")),
+          child: const Text("Sign out")),
     ])));
   }
 }
