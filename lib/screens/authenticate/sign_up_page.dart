@@ -1,23 +1,25 @@
-import 'dart:developer';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_shopping_list/authentication_service.dart';
-import 'package:flutter_shopping_list/sign_up_page.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_shopping_list/services/authentication_service.dart';
+import 'package:flutter_shopping_list/screens/authenticate/sign_in_page.dart';
+import 'package:provider/src/provider.dart';
 
-class SignInPage extends StatefulWidget {
-  const SignInPage({Key? key}) : super(key: key);
+class SignUpPage extends StatefulWidget {
+  const SignUpPage({Key? key}) : super(key: key);
 
   @override
-  _SignInPageState createState() => _SignInPageState();
+  _SignUpPageState createState() => _SignUpPageState();
 }
 
-class _SignInPageState extends State<SignInPage> {
+class _SignUpPageState extends State<SignUpPage> {
   dynamic firebaseResponse = "";
+
   bool _isObscure = true;
   final _formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController passwordController1 = TextEditingController();
+  final TextEditingController passwordController2 = TextEditingController();
+  String password1 = "";
+  String password2 = "";
 
   @override
   Widget build(BuildContext context) {
@@ -59,12 +61,50 @@ class _SignInPageState extends State<SignInPage> {
                               return 'Please enter some text.';
                             }
                             if (val.length < 6) return 'Password too short';
+                            if (password1 != password2) {
+                              return 'Passwords do not match';
+                            }
                             return null;
                           },
+                          onChanged: (val) {
+                            setState(() => password1 = val);
+                          },
                           obscureText: _isObscure,
-                          controller: passwordController,
+                          controller: passwordController1,
                           decoration: InputDecoration(
                               labelText: "Password",
+                              suffixIcon: IconButton(
+                                  icon: Icon(_isObscure
+                                      ? Icons.visibility
+                                      : Icons.visibility_off),
+                                  onPressed: () {
+                                    setState(() {
+                                      _isObscure = !_isObscure;
+                                    });
+                                  }),
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Colors.green.shade200,
+                                      width: 2.0)))),
+                      const SizedBox(height: 10),
+                      TextFormField(
+                          validator: (val) {
+                            if (val == null || val.isEmpty) {
+                              return 'Please enter some text.';
+                            }
+                            if (val.length < 6) return 'Password too short';
+                            if (password1 != password2) {
+                              return 'Passwords do not match';
+                            }
+                            return null;
+                          },
+                          onChanged: (val) {
+                            setState(() => password2 = val);
+                          },
+                          obscureText: _isObscure,
+                          controller: passwordController2,
+                          decoration: InputDecoration(
+                              labelText: "Confirm Password",
                               suffixIcon: IconButton(
                                   icon: Icon(_isObscure
                                       ? Icons.visibility
@@ -91,34 +131,32 @@ class _SignInPageState extends State<SignInPage> {
                                   minimumSize: const Size(1, 50),
                                   primary: Colors.green.shade200),
                               onPressed: () async {
-                                setState(() {});
                                 if (_formKey.currentState!.validate()) {
                                   firebaseResponse = await context
                                       .read<AuthenticationService>()
-                                      .signIn(emailController.text.trim(),
-                                          passwordController.text.trim());
+                                      .signUp(emailController.text.trim(),
+                                          passwordController1.text.trim());
+                                  Navigator.pop(context);
+                                } else {
+                                  firebaseResponse = "";
                                 }
+                                setState(() {});
                               },
-                              child: const Text("Sign in"))),
-                      const SizedBox(height: 35),
+                              child: const Text("Sign up"))),
                       const SizedBox(height: 35),
                       Center(
                           child: IntrinsicWidth(
                               child: Row(
                         children: [
-                          const Text("Don't have an account yet?"),
+                          const Text("Have an account already?"),
                           const SizedBox(width: 10),
                           ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                   primary: Colors.green.shade200),
                               onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const SignUpPage()));
+                                Navigator.pop(context);
                               },
-                              child: const Text("Sign up here"))
+                              child: const Text("Sign in here"))
                         ],
                       ))),
                     ]))));

@@ -1,25 +1,23 @@
+import 'dart:developer';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_shopping_list/authentication_service.dart';
-import 'package:flutter_shopping_list/sign_in_page.dart';
-import 'package:provider/src/provider.dart';
+import 'package:flutter_shopping_list/services/authentication_service.dart';
+import 'package:flutter_shopping_list/screens/authenticate/sign_up_page.dart';
+import 'package:provider/provider.dart';
 
-class SignUpPage extends StatefulWidget {
-  const SignUpPage({Key? key}) : super(key: key);
+class SignInPage extends StatefulWidget {
+  const SignInPage({Key? key}) : super(key: key);
 
   @override
-  _SignUpPageState createState() => _SignUpPageState();
+  _SignInPageState createState() => _SignInPageState();
 }
 
-class _SignUpPageState extends State<SignUpPage> {
+class _SignInPageState extends State<SignInPage> {
   dynamic firebaseResponse = "";
-
   bool _isObscure = true;
   final _formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController1 = TextEditingController();
-  final TextEditingController passwordController2 = TextEditingController();
-  String password1 = "";
-  String password2 = "";
+  final TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -61,50 +59,12 @@ class _SignUpPageState extends State<SignUpPage> {
                               return 'Please enter some text.';
                             }
                             if (val.length < 6) return 'Password too short';
-                            if (password1 != password2) {
-                              return 'Passwords do not match';
-                            }
                             return null;
                           },
-                          onChanged: (val) {
-                            setState(() => password1 = val);
-                          },
                           obscureText: _isObscure,
-                          controller: passwordController1,
+                          controller: passwordController,
                           decoration: InputDecoration(
                               labelText: "Password",
-                              suffixIcon: IconButton(
-                                  icon: Icon(_isObscure
-                                      ? Icons.visibility
-                                      : Icons.visibility_off),
-                                  onPressed: () {
-                                    setState(() {
-                                      _isObscure = !_isObscure;
-                                    });
-                                  }),
-                              enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Colors.green.shade200,
-                                      width: 2.0)))),
-                      const SizedBox(height: 10),
-                      TextFormField(
-                          validator: (val) {
-                            if (val == null || val.isEmpty) {
-                              return 'Please enter some text.';
-                            }
-                            if (val.length < 6) return 'Password too short';
-                            if (password1 != password2) {
-                              return 'Passwords do not match';
-                            }
-                            return null;
-                          },
-                          onChanged: (val) {
-                            setState(() => password2 = val);
-                          },
-                          obscureText: _isObscure,
-                          controller: passwordController2,
-                          decoration: InputDecoration(
-                              labelText: "Confirm Password",
                               suffixIcon: IconButton(
                                   icon: Icon(_isObscure
                                       ? Icons.visibility
@@ -134,26 +94,33 @@ class _SignUpPageState extends State<SignUpPage> {
                                 if (_formKey.currentState!.validate()) {
                                   firebaseResponse = await context
                                       .read<AuthenticationService>()
-                                      .signUp(emailController.text.trim(),
-                                          passwordController1.text.trim());
-                                  Navigator.pop(context);
+                                      .signIn(emailController.text.trim(),
+                                          passwordController.text.trim());
+                                } else {
+                                  firebaseResponse = "";
                                 }
+                                setState(() {});
                               },
-                              child: const Text("Sign up"))),
+                              child: const Text("Sign in"))),
+                      const SizedBox(height: 35),
                       const SizedBox(height: 35),
                       Center(
                           child: IntrinsicWidth(
                               child: Row(
                         children: [
-                          const Text("Have an account already?"),
+                          const Text("Don't have an account yet?"),
                           const SizedBox(width: 10),
                           ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                   primary: Colors.green.shade200),
                               onPressed: () {
-                                Navigator.pop(context);
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const SignUpPage()));
                               },
-                              child: const Text("Sign in here"))
+                              child: const Text("Sign up here"))
                         ],
                       ))),
                     ]))));
