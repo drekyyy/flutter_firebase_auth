@@ -1,12 +1,19 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_shopping_list/services/authentication_service.dart';
 import 'package:provider/src/provider.dart';
+
+import '../models/user.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    // final AuthenticationService authService =
+    //     Provider.of<AuthenticationService>(context);
+    final String uid = Provider.of<SimpleUser?>(context)!.uid;
     return Scaffold(
         appBar: AppBar(
             title: const Center(child: Text('Ekran główny')),
@@ -25,6 +32,7 @@ class HomePage extends StatelessWidget {
             ]),
         body: Center(
             child: Column(children: [
+          Text('user id: ' + uid),
           const Text("Home"),
         ])));
   }
