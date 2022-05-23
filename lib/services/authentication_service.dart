@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
+
 import 'package:flutter_shopping_list/models/user.dart';
 import 'package:flutter_shopping_list/services/database_service.dart';
 
@@ -10,7 +10,11 @@ class AuthenticationService {
   AuthenticationService(this._auth);
 
   SimpleUser? _userfromFirebaseUser(User? user) {
-    return user != null ? SimpleUser(user.uid) : null;
+    return user != null
+        ? SimpleUser(
+            user.uid,
+          )
+        : null;
   }
 
   Stream<SimpleUser?> get user {
@@ -28,13 +32,14 @@ class AuthenticationService {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
       return "Signed in";
     } on FirebaseAuthException catch (e) {
-      var emsg;
+      String? emsg;
       if (e.message != null) emsg = e.message;
-      log(emsg);
+      log(emsg!);
       return e.message;
     }
   }
 
+  // sign up and create document for the user containing userId, houseId and name (email)
   Future<String?> signUp(String email, String password) async {
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(

@@ -8,6 +8,15 @@ class DatabaseService {
       FirebaseFirestore.instance.collection('users');
 
   Future updateUserData(String name) async {
-    return await userCollection.doc(uid).set({'userId': uid, 'name': name});
+    return await userCollection
+        .doc(uid)
+        .set({'userId': uid, 'houseId': uid, 'name': name});
+  }
+
+  static Future getHouseId(userid) async {
+    dynamic snapshot;
+    snapshot =
+        await FirebaseFirestore.instance.collection('users').doc(userid).get();
+    return snapshot.data()['houseId'];
   }
 }

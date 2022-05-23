@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_shopping_list/services/authentication_service.dart';
-import 'package:flutter_shopping_list/screens/authenticate/sign_in_page.dart';
-import 'package:provider/src/provider.dart';
+import 'package:provider/provider.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -48,12 +47,9 @@ class _SignUpPageState extends State<SignUpPage> {
                             return null;
                           },
                           controller: emailController,
-                          decoration: InputDecoration(
-                              labelText: "Email",
-                              enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Colors.green.shade200,
-                                      width: 2.0)))),
+                          decoration: const InputDecoration(
+                            labelText: "Email",
+                          )),
                       const SizedBox(height: 10),
                       TextFormField(
                           validator: (val) {
