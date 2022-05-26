@@ -13,7 +13,7 @@ class HomePage extends StatelessWidget {
 
     return Scaffold(
         appBar: AppBar(
-            elevation: 0,
+            //elevation: 0,
             leading: ElevatedButton(
               child: const Icon(Icons.person),
               onPressed: () {
@@ -32,10 +32,9 @@ class HomePage extends StatelessWidget {
               )
             ]),
         body: Container(
-            //color: Colors.green.shade200,
             child: Center(
                 child: Column(children: [
-          Text('user id: ' + uid),
+          Text('user id: ' + uid, style: const TextStyle(color: Colors.white)),
           const Text("Home"),
         ]))));
   }

@@ -21,7 +21,7 @@ class _SettingsPageState extends State<SettingsPage> {
     return loading
         ? const Loading()
         : Scaffold(
-            appBar: AppBar(backgroundColor: Colors.green.shade200),
+            appBar: AppBar(),
             body: FutureBuilder(
                 future: DatabaseService.getHouseId(uid),
                 builder: (context, snapshot) {
@@ -39,11 +39,14 @@ class _SettingsPageState extends State<SettingsPage> {
                           itemExtent: 80,
                           itemCount: snapshot.data.docs.length,
                           itemBuilder: (context, index) {
-                            return _buildListItem(
-                                context,
-                                snapshot.data.docs[index],
-                                uid,
-                                houseId.toString());
+                            return Container(
+                                margin:
+                                    const EdgeInsets.only(left: 10, right: 10),
+                                child: _buildListItem(
+                                    context,
+                                    snapshot.data.docs[index],
+                                    uid,
+                                    houseId.toString()));
                           },
                         );
                       });
@@ -53,15 +56,31 @@ class _SettingsPageState extends State<SettingsPage> {
 
 Widget _buildListItem(
     BuildContext context, DocumentSnapshot doc, String userId, String houseId) {
-  return ListTile(
-    onTap: () {},
-    title: Row(
-      children: [
-        Expanded(child: Text('${doc['name']}')),
-        const SizedBox(
-          height: 5,
-        ),
-      ],
-    ),
-  );
+  // jesli dokument jest aktualnego uzytkownika
+  if (doc['userId'] == userId) {
+    return ListTile(
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(20))),
+      tileColor: Colors.white,
+      onTap: () {},
+      title: Row(
+        children: [
+          Expanded(child: Text('${doc['name']} (Ty)')),
+          const Icon(Icons.edit, color: Color.fromARGB(255, 165, 214, 167)),
+        ],
+      ),
+    );
+  } else {
+    return ListTile(
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(20))),
+      tileColor: Colors.white,
+      onTap: () {},
+      title: Row(
+        children: [
+          Expanded(child: Text('${doc['name']}')),
+        ],
+      ),
+    );
+  }
 }

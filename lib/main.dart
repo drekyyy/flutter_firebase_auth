@@ -34,9 +34,11 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             canvasColor: Colors.green.shade200,
             backgroundColor: Colors.green.shade200,
-            appBarTheme: AppBarTheme(backgroundColor: Colors.green.shade200),
-            textTheme:
-                TextTheme(bodyText2: TextStyle(color: Colors.green.shade200)),
+            appBarTheme: AppBarTheme(
+                backgroundColor: Colors.green.shade200, elevation: 0),
+            textTheme: TextTheme(
+                bodyText2: TextStyle(color: Colors.green.shade200),
+                subtitle1: TextStyle(color: Colors.green.shade200)),
             inputDecorationTheme: const InputDecorationTheme(
                 labelStyle:
                     TextStyle(color: Color.fromARGB(255, 165, 214, 167)),
@@ -50,12 +52,13 @@ class MyApp extends StatelessWidget {
                         color: Color.fromARGB(255, 165, 214, 167),
                         width: 2.0))),
             elevatedButtonTheme: ElevatedButtonThemeData(
-                style: ButtonStyle(
-                    elevation: null,
-                    foregroundColor:
-                        MaterialStateProperty.all<Color>(Colors.white),
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                        Colors.green.shade200))),
+              style: ButtonStyle(
+                  elevation: MaterialStateProperty.all<double>(0),
+                  foregroundColor:
+                      MaterialStateProperty.all<Color>(Colors.white),
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(Colors.green.shade200)),
+            ),
           ),
           home: const AuthenticationWrapper(),
         ));

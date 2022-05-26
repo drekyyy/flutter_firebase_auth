@@ -67,8 +67,9 @@ class _SignUpPageState extends State<SignUpPage> {
                                   if (val == null || val.isEmpty) {
                                     return 'Please enter some text.';
                                   }
-                                  if (val.length < 6)
+                                  if (val.length < 6) {
                                     return 'Password too short';
+                                  }
                                   if (password1 != password2) {
                                     return 'Passwords do not match';
                                   }
@@ -97,8 +98,9 @@ class _SignUpPageState extends State<SignUpPage> {
                                   if (val == null || val.isEmpty) {
                                     return 'Please enter some text.';
                                   }
-                                  if (val.length < 6)
+                                  if (val.length < 6) {
                                     return 'Password too short';
+                                  }
                                   if (password1 != password2) {
                                     return 'Passwords do not match';
                                   }
