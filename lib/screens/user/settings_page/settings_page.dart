@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_shopping_list/services/database_service.dart';
 import 'package:provider/provider.dart';
-import '../../models/user.dart';
+import '../../../models/user.dart';
 
 import 'package:flutter_shopping_list/shared/loading.dart';
 
@@ -21,7 +21,7 @@ class _SettingsPageState extends State<SettingsPage> {
     return loading
         ? const Loading()
         : Scaffold(
-            appBar: AppBar(),
+            appBar: AppBar(title: const Center(child: Text('Członkowie domu'))),
             body: FutureBuilder(
                 future: DatabaseService.getHouseId(uid),
                 builder: (context, snapshot) {
