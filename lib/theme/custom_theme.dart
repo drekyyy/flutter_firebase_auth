@@ -9,7 +9,7 @@ class CustomTheme {
           AppBarTheme(backgroundColor: Colors.green.shade200, elevation: 0),
       textTheme: TextTheme(
           bodyText2: TextStyle(color: Colors.green.shade200),
-          subtitle1: TextStyle(color: Colors.green.shade200)),
+          subtitle1: TextStyle(color: Color.fromARGB(255, 165, 214, 167))),
       inputDecorationTheme: const InputDecorationTheme(
           labelStyle: TextStyle(color: Color.fromARGB(255, 165, 214, 167)),
           filled: true,
@@ -27,6 +27,7 @@ class CustomTheme {
             backgroundColor:
                 MaterialStateProperty.all<Color>(Colors.green.shade200)),
       ),
+      drawerTheme: const DrawerThemeData(elevation: 0),
     );
   }
 }

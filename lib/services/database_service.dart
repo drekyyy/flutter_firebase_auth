@@ -19,4 +19,22 @@ class DatabaseService {
         await FirebaseFirestore.instance.collection('users').doc(userid).get();
     return snapshot.data()['houseId'];
   }
+
+  static Future checkIfHouseExists(String houseId) async {
+    dynamic userDocRef =
+        await FirebaseFirestore.instance.collection('users').doc(houseId);
+    dynamic doc = await userDocRef.get();
+    if (doc.exists) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  static Future updateUserHouseId(String houseId, String userId) async {
+    return await FirebaseFirestore.instance
+        .collection('users')
+        .doc(userId)
+        .update({'houseId': houseId});
+  }
 }

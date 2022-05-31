@@ -14,27 +14,14 @@ class HomePage extends StatelessWidget {
 
     return Scaffold(
         drawer: HamburgerMenu(),
-        appBar: AppBar(
-            //elevation: 0,
-            //leading: HamburgerMenu()
-            // ElevatedButton(
-            //   child: const Icon(Icons.person),
-            //   onPressed: () {
-            //     Navigator.push(
-            //         context,
-            //         MaterialPageRoute(
-            //             builder: (context) => const SettingsPage()));
-            //   },
-            // )
-
-            actions: <Widget>[
-              ElevatedButton(
-                child: const Text("Wyloguj"),
-                onPressed: () {
-                  context.read<AuthenticationService>().signOut();
-                },
-              )
-            ]),
+        appBar: AppBar(actions: <Widget>[
+          ElevatedButton(
+            child: const Text("Wyloguj"),
+            onPressed: () {
+              context.read<AuthenticationService>().signOut();
+            },
+          )
+        ]),
         body: Container(
             child: Center(
                 child: Column(children: [
