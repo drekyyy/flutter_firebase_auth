@@ -7,10 +7,14 @@ class DatabaseService {
   final CollectionReference userCollection =
       FirebaseFirestore.instance.collection('users');
 
-  Future updateUserData(String name) async {
-    return await userCollection
+  Future createUserDocumentInDatabase(String name) async {
+    await userCollection
         .doc(uid)
         .set({'userId': uid, 'houseId': uid, 'name': name});
+  }
+
+  Future createHouseInDatabase() async {
+    await FirebaseFirestore.instance.collection('houses').doc(uid).set({});
   }
 
   static Future getHouseId(userid) async {
