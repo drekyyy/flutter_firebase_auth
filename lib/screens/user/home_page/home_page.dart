@@ -31,10 +31,11 @@ class _HomePageState extends State<HomePage> {
           )
         ]),
         body: FutureBuilder(
+            //getting house id of user
             future: DatabaseService.getHouseId(uid),
             builder: (context, snapshot) {
               if (!snapshot.hasData) return const Loading();
-              Object? houseId = snapshot.data;
+              String houseId = snapshot.data.toString();
               return StreamBuilder(
                   //checking shopping lists
                   stream: FirebaseFirestore.instance
@@ -48,18 +49,14 @@ class _HomePageState extends State<HomePage> {
                       return const Text('Nie masz jeszcze listy zakupów',
                           style: TextStyle(color: Colors.purple));
                     }
-                    Object? houseId = snapshot.data;
-
+                    //building listview for each shopping list
                     return ListView.builder(
                       shrinkWrap: true,
                       scrollDirection: Axis.horizontal,
-                      // itemExtent: 80,
                       itemCount: snapshot.data.docs.length,
                       itemBuilder: (context, index) {
-                        // print(
-                        //     'doc id= ' + snapshot.data.docs[index].id);
                         return _buildList(context, snapshot.data.docs[index],
-                            uid, houseId.toString(), index);
+                            uid, houseId, index);
                       },
                     );
                   });
@@ -67,7 +64,7 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-Widget _buildList(BuildContext context, DocumentSnapshot doc, String userId,
+Widget _buildList(BuildContext context, DocumentSnapshot listDoc, String userId,
     String houseId, int index) {
   return Container(
       decoration: BoxDecoration(
@@ -79,22 +76,23 @@ Widget _buildList(BuildContext context, DocumentSnapshot doc, String userId,
       height: MediaQuery.of(context).size.height - 50,
       child: Column(children: [
         ListTile(
-          onTap: () {},
+          onTap: () {
+            setState() {}
+          },
           title: Row(
             children: [
               Text('Lista zakupow nr ' + (index + 1).toString(),
                   style: const TextStyle(color: Colors.white)),
             ],
           ),
-          subtitle: Text('doc id: ' + doc.id),
+          subtitle: Text('doc id: ' + listDoc.id),
         ),
         StreamBuilder(
-            //checking shopping lists
             stream: FirebaseFirestore.instance
                 .collection('houses')
                 .doc(houseId.toString())
                 .collection('shopping-lists')
-                .doc(doc.id)
+                .doc(listDoc.id.toString())
                 .collection('products')
                 .snapshots(),
             builder: (context, AsyncSnapshot snapshot) {
@@ -105,7 +103,6 @@ Widget _buildList(BuildContext context, DocumentSnapshot doc, String userId,
               }
               return ListView.builder(
                 shrinkWrap: true,
-                // itemExtent: 80,
                 itemCount: snapshot.data.docs.length,
                 itemBuilder: (context, index) {
                   return _buildListOfProducts(context,
@@ -122,6 +119,6 @@ Widget _buildListOfProducts(
     shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(20))),
     onTap: () {},
-    title: Text(doc['name'], style: const TextStyle(color: Colors.white)),
+    title: Text(doc.id, style: const TextStyle(color: Colors.white)),
   );
 }
