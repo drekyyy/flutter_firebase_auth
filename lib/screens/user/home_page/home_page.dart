@@ -30,6 +30,22 @@ class _HomePageState extends State<HomePage> {
             },
           )
         ]),
+        bottomSheet: Container(
+            height: 70,
+            child: Center(
+                child: TextButton(
+                    onPressed: () async {
+                      await DatabaseService.createShoppingList(uid);
+                    },
+                    child: Column(
+                      children: [
+                        Icon(Icons.add_box),
+                        SizedBox(height: 5),
+                        Text('Nowa lista',
+                            style: TextStyle(
+                                color: Colors.white, fontFamily: 'Roboto')),
+                      ],
+                    )))),
         body: FutureBuilder(
             //getting house id of user
             future: DatabaseService.getHouseId(uid),
@@ -70,15 +86,13 @@ Widget _buildList(BuildContext context, DocumentSnapshot listDoc, String userId,
       decoration: BoxDecoration(
           border: Border.all(color: Colors.white),
           borderRadius: const BorderRadius.all(Radius.circular(20))),
-      margin: const EdgeInsets.all(25),
+      margin: const EdgeInsets.only(top: 25, left: 25, right: 25, bottom: 100),
       padding: const EdgeInsets.all(10),
       width: MediaQuery.of(context).size.width - 50,
-      height: MediaQuery.of(context).size.height - 50,
+      height: MediaQuery.of(context).size.height - 340,
       child: Column(children: [
         ListTile(
-          onTap: () {
-            setState() {}
-          },
+          onTap: () {},
           title: Row(
             children: [
               Text('Lista zakupow nr ' + (index + 1).toString(),

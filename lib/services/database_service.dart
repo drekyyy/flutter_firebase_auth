@@ -17,11 +17,41 @@ class DatabaseService {
     await FirebaseFirestore.instance.collection('houses').doc(uid).set({});
   }
 
+  static Future createShoppingList(String uid) async {
+    dynamic userName = await getUserName(uid);
+    dynamic houseId = await getHouseId(uid);
+    await FirebaseFirestore.instance
+        .collection('houses')
+        .doc(houseId)
+        .collection('shopping-lists')
+        .doc()
+        .set({'name': 'Brak nazwy', 'createdBy': userName});
+  }
+
+  static Future addProductToShoppingList(
+      String houseId, String shoppingListId, String productName) async {
+    await FirebaseFirestore.instance
+        .collection('houses')
+        .doc(houseId)
+        .collection('shopping-lists')
+        .doc(shoppingListId)
+        .collection('products')
+        .doc()
+        .set({'name': productName});
+  }
+
   static Future getHouseId(userid) async {
     dynamic snapshot;
     snapshot =
         await FirebaseFirestore.instance.collection('users').doc(userid).get();
     return snapshot.data()['houseId'];
+  }
+
+  static Future getUserName(userid) async {
+    dynamic snapshot;
+    snapshot =
+        await FirebaseFirestore.instance.collection('users').doc(userid).get();
+    return snapshot.data()['name'];
   }
 
   static Future checkIfHouseExists(String houseId) async {
