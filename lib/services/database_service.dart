@@ -18,6 +18,7 @@ class DatabaseService {
   }
 
   static Future createShoppingList(String uid) async {
+    DateTime now = DateTime.now();
     dynamic userName = await getUserName(uid);
     dynamic houseId = await getHouseId(uid);
     await FirebaseFirestore.instance
@@ -25,7 +26,13 @@ class DatabaseService {
         .doc(houseId)
         .collection('shopping-lists')
         .doc()
-        .set({'name': 'Brak nazwy', 'createdBy': userName});
+        .set({
+      'name': 'Brak nazwy',
+      'createdBy': userName,
+      'dateWhenCreated': '${now.year}/${now.month}/${now.day}',
+      'hourWhenCreated': '${now.hour}:${now.minute}',
+      'timestamp': now.millisecondsSinceEpoch
+    });
   }
 
   static Future addProductToShoppingList(
@@ -38,6 +45,17 @@ class DatabaseService {
         .collection('products')
         .doc()
         .set({'name': productName});
+  }
+
+  static Future changeNameOfShoppingList(
+      String houseId, String shoppingListId, String listName) async {
+    await FirebaseFirestore.instance
+        .collection('houses')
+        .doc(houseId)
+        .collection('shopping-lists')
+        .doc(shoppingListId)
+        .update({'name': listName}).catchError(
+            (error) => print("Failed to update user: $error"));
   }
 
   static Future getHouseId(userid) async {
