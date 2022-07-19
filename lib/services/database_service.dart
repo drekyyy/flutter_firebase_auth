@@ -47,6 +47,20 @@ class DatabaseService {
         .set({'name': productName});
   }
 
+  static Future deleteShoppingList(
+      String houseId, String shoppingListId) async {
+    await FirebaseFirestore.instance
+        .collection('houses')
+        .doc(houseId)
+        .collection('shopping-lists')
+        .doc(shoppingListId)
+        .delete()
+        .then(
+          (doc) => print("Document deleted"),
+          onError: (e) => print("Error updating document $e"),
+        );
+  }
+
   static Future changeNameOfShoppingList(
       String houseId, String shoppingListId, String listName) async {
     await FirebaseFirestore.instance
