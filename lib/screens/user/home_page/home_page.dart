@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_shopping_list/screens/user/home_page/components/hamburger_menu.dart';
-import 'package:flutter_shopping_list/screens/user/settings_page/settings_page.dart';
 import 'package:flutter_shopping_list/services/authentication_service.dart';
 import 'package:provider/provider.dart';
 import '../../../models/user.dart';
@@ -59,6 +57,7 @@ class _HomePageState extends State<HomePage> {
                       .collection('houses')
                       .doc(houseId.toString())
                       .collection('shopping-lists')
+                      .orderBy('timestamp')
                       .snapshots(),
                   builder: (context, AsyncSnapshot snapshot) {
                     if (!snapshot.hasData) return const Loading();
@@ -122,6 +121,7 @@ Widget _buildShoppingList(BuildContext context, DocumentSnapshot listDoc,
                                           await DatabaseService
                                               .deleteShoppingList(
                                                   houseId, listDoc.id);
+                                          Navigator.pop(context);
                                         },
                                         child: const Text('Tak',
                                             style: TextStyle(
@@ -316,6 +316,7 @@ Widget _buildShoppingList(BuildContext context, DocumentSnapshot listDoc,
                       return _buildListOfProducts(
                           context,
                           index,
+                          listDoc.id.toString(),
                           snapshot.data.docs[index],
                           userId,
                           houseId.toString());
@@ -326,12 +327,37 @@ Widget _buildShoppingList(BuildContext context, DocumentSnapshot listDoc,
 }
 
 // usunac dodaj produkt text, zostawic sam plus. dodac smietnik usuniecie listy, na longpress usuniecie produktu
-Widget _buildListOfProducts(BuildContext context, int index,
+Widget _buildListOfProducts(BuildContext context, int index, String listId,
     DocumentSnapshot productDoc, String userId, String houseId) {
   return ListTile(
     shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(20))),
     onTap: () {},
+    onLongPress: () async {
+      showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title: Text('Czy usunąć ${productDoc['name']}?',
+              style: TextStyle(color: Color.fromARGB(255, 165, 214, 167))),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Center(
+                  child: TextButton(
+                onPressed: () async {
+                  await DatabaseService.deleteProductFromShoppingList(
+                      houseId, listId, productDoc.id);
+                  Navigator.pop(context);
+                },
+                child: const Text('Tak',
+                    style:
+                        TextStyle(color: Color.fromARGB(255, 165, 214, 167))),
+              )),
+            ],
+          ),
+        ),
+      );
+    },
     title: Text('${index + 1}. ${productDoc['name']}',
         style: const TextStyle(color: Colors.white)),
   );
