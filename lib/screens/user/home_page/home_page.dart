@@ -338,7 +338,8 @@ Widget _buildListOfProducts(BuildContext context, int index, String listId,
         context: context,
         builder: (BuildContext context) => AlertDialog(
           title: Text('Czy usunąć ${productDoc['name']}?',
-              style: TextStyle(color: Color.fromARGB(255, 165, 214, 167))),
+              style:
+                  const TextStyle(color: Color.fromARGB(255, 165, 214, 167))),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
