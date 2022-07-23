@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 class DatabaseService {
   final String uid;
@@ -8,9 +9,15 @@ class DatabaseService {
       FirebaseFirestore.instance.collection('users');
 
   Future createUserDocumentInDatabase(String name) async {
+    String? fcmToken = await FirebaseMessaging.instance.getToken();
     await userCollection
         .doc(uid)
-        .set({'userId': uid, 'houseId': uid, 'name': name});
+        .set({'userId': uid, 'houseId': uid, 'name': name, 'token': fcmToken});
+  }
+
+  Future updateFcmTokenOfUser() async {
+    String? fcmToken = await FirebaseMessaging.instance.getToken();
+    await userCollection.doc(uid).update({'token': fcmToken});
   }
 
   Future createHouseInDatabase() async {

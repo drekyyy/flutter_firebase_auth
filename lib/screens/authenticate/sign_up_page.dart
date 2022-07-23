@@ -147,8 +147,8 @@ class _SignUpPageState extends State<SignUpPage> {
                                         Navigator.pop(context);
                                       } else {
                                         firebaseResponse = "";
+                                        setState(() {});
                                       }
-                                      setState(() {});
                                     },
                                     child: const Text("Sign up"))),
                             const SizedBox(height: 25),

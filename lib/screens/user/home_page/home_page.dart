@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_shopping_list/screens/user/home_page/components/hamburger_menu.dart';
 import 'package:flutter_shopping_list/services/authentication_service.dart';
@@ -16,6 +17,27 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   @override
+  initState() {
+    super.initState();
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      RemoteNotification? notification = message.notification;
+
+      print('Got a message whilst in the foreground!');
+      print('Message data: ${message.data}');
+
+      if (message.notification != null) {
+        print('Message also contained a notification: ${message.notification}');
+      }
+
+      final snackbar = SnackBar(
+          content: Text('${notification!.title} ${notification.body}'),
+          action: SnackBarAction(label: 'ok', onPressed: () {}));
+
+      ScaffoldMessenger.of(context).showSnackBar(snackbar);
+    });
+  }
+
   Widget build(BuildContext context) {
     final String uid = Provider.of<SimpleUser?>(context)!.uid;
 

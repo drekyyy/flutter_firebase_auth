@@ -29,7 +29,10 @@ class AuthenticationService {
 
   Future<String?> signIn(String email, String password) async {
     try {
-      await _auth.signInWithEmailAndPassword(email: email, password: password);
+      UserCredential result = await _auth.signInWithEmailAndPassword(
+          email: email, password: password);
+      User user = result.user!;
+      await DatabaseService(user.uid).updateFcmTokenOfUser();
       return "Signed in";
     } on FirebaseAuthException catch (e) {
       String? emsg;

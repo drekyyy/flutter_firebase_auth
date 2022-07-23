@@ -105,8 +105,8 @@ class _SignInPageState extends State<SignInPage> {
                                                 passwordController.text.trim());
                                       } else {
                                         firebaseResponse = "";
+                                        setState(() {});
                                       }
-                                      setState(() {});
                                     },
                                     child: const Text("Sign in"))),
                             const SizedBox(height: 35),
