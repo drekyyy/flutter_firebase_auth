@@ -40,8 +40,8 @@ class _SettingsPageState extends State<SettingsPage> {
                           itemCount: snapshot.data.docs.length,
                           itemBuilder: (context, index) {
                             return Container(
-                                margin:
-                                    const EdgeInsets.only(left: 10, right: 10),
+                                margin: const EdgeInsets.only(
+                                    left: 10, right: 10, bottom: 10),
                                 child: _buildListItem(
                                     context,
                                     snapshot.data.docs[index],
@@ -59,21 +59,82 @@ Widget _buildListItem(
   // jesli dokument jest aktualnego uzytkownika
   if (doc['userId'] == userId) {
     return ListTile(
-      shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(20))),
+      // shape: const RoundedRectangleBorder(
+      //     borderRadius: BorderRadius.all(Radius.circular(20))),
       tileColor: Colors.white,
       onTap: () {},
       title: Row(
         children: [
           Expanded(child: Text('${doc['name']} (Ty)')),
-          const Icon(Icons.edit, color: Color.fromARGB(255, 165, 214, 167)),
+          IconButton(
+              onPressed: () {
+                final _formKey = GlobalKey<FormState>();
+                final TextEditingController userNameController =
+                    TextEditingController();
+                String userName;
+                String? firebaseResponse = '';
+                showDialog<String>(
+                  context: context,
+                  builder: (BuildContext context) => AlertDialog(
+                    title: const Text('Jak chcesz sie nazywać?',
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 165, 214, 167))),
+                    content: Form(
+                        key: _formKey,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            TextFormField(
+                                validator: (val) {
+                                  if (val == null || val.isEmpty) {
+                                    return 'Please enter some text.';
+                                  }
+                                  if (val.length > 20) {
+                                    return 'Product name too long';
+                                  }
+
+                                  return null;
+                                },
+                                onChanged: (val) {
+                                  userName = val;
+                                },
+                                controller: userNameController,
+                                decoration: const InputDecoration(
+                                  labelText: "Nozwa nazwa",
+                                )),
+                            Center(
+                                child: TextButton(
+                              onPressed: () async {
+                                if (_formKey.currentState!.validate()) {
+                                  firebaseResponse =
+                                      await DatabaseService.changeNameOfUser(
+                                          userId,
+                                          userNameController.text.trim());
+                                  Navigator.pop(context);
+                                } else {
+                                  Text(firebaseResponse.toString());
+                                  firebaseResponse = '';
+                                }
+                              },
+                              child: const Text('Ok',
+                                  style: TextStyle(
+                                      color:
+                                          Color.fromARGB(255, 165, 214, 167))),
+                            )),
+                          ],
+                        )),
+                  ),
+                );
+              },
+              icon: const Icon(Icons.edit),
+              color: const Color.fromARGB(255, 165, 214, 167)),
         ],
       ),
     );
   } else {
     return ListTile(
-      shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(20))),
+      // shape: const RoundedRectangleBorder(
+      //     borderRadius: BorderRadius.all(Radius.circular(20))),
       tileColor: Colors.white,
       onTap: () {},
       title: Row(

@@ -84,6 +84,14 @@ class DatabaseService {
         );
   }
 
+  static Future changeNameOfUser(String userId, String name) async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(userId)
+        .update({'name': name}).catchError(
+            (error) => print("Failed to update user: $error"));
+  }
+
   static Future changeNameOfShoppingList(
       String houseId, String shoppingListId, String listName) async {
     await FirebaseFirestore.instance

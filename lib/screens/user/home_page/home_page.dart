@@ -63,23 +63,6 @@ class _HomePageState extends State<HomePage> {
       print('A new onMessageOpenedApp event was published!');
       return null;
     });
-
-    // FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-    //   RemoteNotification? notification = message.notification;
-
-    //   print('Got a message whilst in the foreground!');
-    //   print('Message data: ${message.data}');
-
-    //   if (message.notification != null) {
-    //     print('Message also contained a notification: ${message.notification}');
-    //   }
-
-    //   final snackbar = SnackBar(
-    //       content: Text('${notification!.title} ${notification.body}'),
-    //       action: SnackBarAction(label: 'ok', onPressed: () {}));
-
-    //   ScaffoldMessenger.of(context).showSnackBar(snackbar);
-    // });
   }
 
   Widget build(BuildContext context) {
