@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_shopping_list/screens/user/home_page/components/hamburger_menu.dart';
 import 'package:flutter_shopping_list/services/authentication_service.dart';
 import 'package:provider/provider.dart';
+import '../../../main.dart';
 import '../../../models/user.dart';
 import '../../../services/database_service.dart';
 import '../../../shared/loading.dart';
@@ -20,22 +23,63 @@ class _HomePageState extends State<HomePage> {
   initState() {
     super.initState();
 
+    FirebaseMessaging.instance
+        .getInitialMessage()
+        .then((RemoteMessage? message) {
+      if (message != null) {
+        return null;
+      }
+    });
+
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       RemoteNotification? notification = message.notification;
+      AndroidNotification? android = message.notification?.android;
+      if (notification != null && android != null && !kIsWeb) {
+        flutterLocalNotificationsPlugin.show(
+          notification.hashCode,
+          notification.title,
+          notification.body,
+          NotificationDetails(
+            android: AndroidNotificationDetails(
+              channel.id,
+              channel.name,
+              channelDescription: channel.description,
+              // TODO add a proper drawable resource to android, for now using
+              //      one that already exists in example app.
+              icon: 'launch_background',
+            ),
+          ),
+        );
 
-      print('Got a message whilst in the foreground!');
-      print('Message data: ${message.data}');
+        final snackbar = SnackBar(
+            content: Text('${notification.title} ${notification.body}'),
+            action: SnackBarAction(label: 'ok', onPressed: () {}));
 
-      if (message.notification != null) {
-        print('Message also contained a notification: ${message.notification}');
+        ScaffoldMessenger.of(context).showSnackBar(snackbar);
       }
-
-      final snackbar = SnackBar(
-          content: Text('${notification!.title} ${notification.body}'),
-          action: SnackBarAction(label: 'ok', onPressed: () {}));
-
-      ScaffoldMessenger.of(context).showSnackBar(snackbar);
     });
+
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      print('A new onMessageOpenedApp event was published!');
+      return null;
+    });
+
+    // FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    //   RemoteNotification? notification = message.notification;
+
+    //   print('Got a message whilst in the foreground!');
+    //   print('Message data: ${message.data}');
+
+    //   if (message.notification != null) {
+    //     print('Message also contained a notification: ${message.notification}');
+    //   }
+
+    //   final snackbar = SnackBar(
+    //       content: Text('${notification!.title} ${notification.body}'),
+    //       action: SnackBarAction(label: 'ok', onPressed: () {}));
+
+    //   ScaffoldMessenger.of(context).showSnackBar(snackbar);
+    // });
   }
 
   Widget build(BuildContext context) {
