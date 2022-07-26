@@ -11,7 +11,6 @@ class HamburgerMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //String houseId = '';
     final String uid = Provider.of<SimpleUser?>(context)!.uid;
     return Drawer(
         child: ListView(

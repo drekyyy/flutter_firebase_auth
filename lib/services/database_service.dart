@@ -55,7 +55,7 @@ class DatabaseService {
   }
 
   static Future deleteShoppingList(
-      String houseId, String shoppingListId) async {
+      String houseId, String shoppingListId, String useless) async {
     await FirebaseFirestore.instance
         .collection('houses')
         .doc(houseId)

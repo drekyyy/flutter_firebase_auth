@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_shopping_list/screens/user/home_page/components/hamburger_menu.dart';
 import 'package:flutter_shopping_list/services/authentication_service.dart';
+import 'package:flutter_shopping_list/shared/custom_show_dialog.dart';
 import 'package:flutter_shopping_list/shared/custom_show_dialog_with_fields.dart';
 import 'package:provider/provider.dart';
 import '../../../main.dart';
@@ -155,34 +156,14 @@ Widget _buildShoppingList(BuildContext context, DocumentSnapshot listDoc,
                         padding: const EdgeInsets.only(left: 5),
                         child: TextButton(
                             onLongPress: () {
-                              showDialog<String>(
-                                context: context,
-                                builder: (BuildContext context) => AlertDialog(
-                                  title: const Text('Czy usunąć tą liste?',
-                                      style: TextStyle(
-                                          color: Color.fromARGB(
-                                              255, 165, 214, 167))),
-                                  content: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Center(
-                                          child: TextButton(
-                                        onPressed: () async {
-                                          await DatabaseService
-                                              .deleteShoppingList(
-                                                  houseId, listDoc.id);
-                                          Navigator.pop(context);
-                                        },
-                                        child: const Text('Tak',
-                                            style: TextStyle(
-                                                color: Color.fromARGB(
-                                                    255, 165, 214, 167))),
-                                      )),
-                                    ],
-                                  ),
-                                ),
-                              );
-                            }, //tutaj dodac usuwanie listy zakupow ^
+                              customShowDialog(
+                                  context,
+                                  'Czy usunąć tą liste?',
+                                  DatabaseService.deleteShoppingList,
+                                  houseId,
+                                  listDoc.id,
+                                  '');
+                            },
                             onPressed: () {},
                             child: Row(children: [
                               const Icon(Icons.numbers, size: 18),
@@ -279,30 +260,13 @@ Widget _buildListOfProducts(BuildContext context, int index, String listId,
         borderRadius: BorderRadius.all(Radius.circular(20))),
     onTap: () {},
     onLongPress: () async {
-      showDialog<String>(
-        context: context,
-        builder: (BuildContext context) => AlertDialog(
-          title: Text('Czy usunąć ${productDoc['name']}?',
-              style:
-                  const TextStyle(color: Color.fromARGB(255, 165, 214, 167))),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Center(
-                  child: TextButton(
-                onPressed: () async {
-                  await DatabaseService.deleteProductFromShoppingList(
-                      houseId, listId, productDoc.id);
-                  Navigator.pop(context);
-                },
-                child: const Text('Tak',
-                    style:
-                        TextStyle(color: Color.fromARGB(255, 165, 214, 167))),
-              )),
-            ],
-          ),
-        ),
-      );
+      customShowDialog(
+          context,
+          'Czy usunąć ${productDoc['name']}?',
+          DatabaseService.deleteProductFromShoppingList,
+          houseId,
+          listId,
+          productDoc.id);
     },
     title: Text('${index + 1}. ${productDoc['name']}',
         style: const TextStyle(color: Colors.white)),
