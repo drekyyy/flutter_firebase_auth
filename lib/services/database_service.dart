@@ -84,7 +84,8 @@ class DatabaseService {
         );
   }
 
-  static Future changeNameOfUser(String userId, String name) async {
+  static Future changeNameOfUser(
+      String userId, String useless, String name) async {
     await FirebaseFirestore.instance
         .collection('users')
         .doc(userId)

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_shopping_list/screens/user/home_page/components/hamburger_menu.dart';
 import 'package:flutter_shopping_list/services/authentication_service.dart';
+import 'package:flutter_shopping_list/shared/custom_show_dialog_with_fields.dart';
 import 'package:provider/provider.dart';
 import '../../../main.dart';
 import '../../../models/user.dart';
@@ -197,68 +198,14 @@ Widget _buildShoppingList(BuildContext context, DocumentSnapshot listDoc,
                     TextButton(
                         onPressed: () {},
                         onLongPress: () {
-                          final _formKey = GlobalKey<FormState>();
-                          final TextEditingController listNameController =
-                              TextEditingController();
-                          String listName;
-                          String? firebaseResponse = '';
-                          showDialog<String>(
-                            context: context,
-                            builder: (BuildContext context) => AlertDialog(
-                              title: const Text('Zmiana nazwy listy',
-                                  style: TextStyle(
-                                      color:
-                                          Color.fromARGB(255, 165, 214, 167))),
-                              content: Form(
-                                  key: _formKey,
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      TextFormField(
-                                          validator: (val) {
-                                            if (val == null || val.isEmpty) {
-                                              return 'Please enter some text.';
-                                            }
-                                            if (val.length > 20) {
-                                              return 'List name too long';
-                                            }
-
-                                            return null;
-                                          },
-                                          onChanged: (val) {
-                                            listName = val;
-                                          },
-                                          controller: listNameController,
-                                          decoration: const InputDecoration(
-                                            labelText: "Nowa nazwa listy",
-                                          )),
-                                      Center(
-                                          child: TextButton(
-                                        onPressed: () async {
-                                          if (_formKey.currentState!
-                                              .validate()) {
-                                            firebaseResponse =
-                                                await DatabaseService
-                                                    .changeNameOfShoppingList(
-                                                        houseId,
-                                                        listDoc.id.toString(),
-                                                        listNameController.text
-                                                            .trim());
-                                            Navigator.pop(context);
-                                          } else {
-                                            Text(firebaseResponse.toString());
-                                            firebaseResponse = '';
-                                          }
-                                        },
-                                        child: const Text('Ok',
-                                            style: TextStyle(
-                                                color: Color.fromARGB(
-                                                    255, 165, 214, 167))),
-                                      )),
-                                    ],
-                                  )),
-                            ),
-                          );
+                          customShowDialogWithFields(
+                              context,
+                              'Zmiana nazwy listy',
+                              "Nowa nazwa listy",
+                              20,
+                              DatabaseService.changeNameOfShoppingList,
+                              houseId,
+                              listDoc.id.toString());
                         },
                         child: Text(listDoc['name'],
                             overflow: TextOverflow.ellipsis,
@@ -268,65 +215,14 @@ Widget _buildShoppingList(BuildContext context, DocumentSnapshot listDoc,
                 )),
                 TextButton(
                     onPressed: () {
-                      final _formKey = GlobalKey<FormState>();
-                      final TextEditingController productNameController =
-                          TextEditingController();
-                      String productName;
-                      String? firebaseResponse = '';
-                      showDialog<String>(
-                        context: context,
-                        builder: (BuildContext context) => AlertDialog(
-                          title: const Text('Dodaj produkt',
-                              style: TextStyle(
-                                  color: Color.fromARGB(255, 165, 214, 167))),
-                          content: Form(
-                              key: _formKey,
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  TextFormField(
-                                      validator: (val) {
-                                        if (val == null || val.isEmpty) {
-                                          return 'Please enter some text.';
-                                        }
-                                        if (val.length > 30) {
-                                          return 'Product name too long';
-                                        }
-
-                                        return null;
-                                      },
-                                      onChanged: (val) {
-                                        productName = val;
-                                      },
-                                      controller: productNameController,
-                                      decoration: const InputDecoration(
-                                        labelText: "Nazwa produktu",
-                                      )),
-                                  Center(
-                                      child: TextButton(
-                                    onPressed: () async {
-                                      if (_formKey.currentState!.validate()) {
-                                        firebaseResponse = await DatabaseService
-                                            .addProductToShoppingList(
-                                                houseId,
-                                                listDoc.id.toString(),
-                                                productNameController.text
-                                                    .trim());
-                                        Navigator.pop(context);
-                                      } else {
-                                        Text(firebaseResponse.toString());
-                                        firebaseResponse = '';
-                                      }
-                                    },
-                                    child: const Text('Ok',
-                                        style: TextStyle(
-                                            color: Color.fromARGB(
-                                                255, 165, 214, 167))),
-                                  )),
-                                ],
-                              )),
-                        ),
-                      );
+                      customShowDialogWithFields(
+                          context,
+                          'Dodaj produkt',
+                          'Nazwa produktu',
+                          30,
+                          DatabaseService.addProductToShoppingList,
+                          houseId,
+                          listDoc.id.toString());
                     },
                     child: Column(children: const [
                       Icon(Icons.add),
