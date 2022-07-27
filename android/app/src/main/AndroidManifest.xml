@@ -3,7 +3,7 @@
    <application
         android:label="flutter_shopping_list"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
 
         <meta-data
         android:name="com.google.firebase.messaging.default_notification_channel_id"

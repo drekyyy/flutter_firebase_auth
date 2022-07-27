@@ -21,7 +21,9 @@ class _SignInPageState extends State<SignInPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Center(child: Text('Shopping list')),
+          title: Center(
+              child: Image.asset("assets/app-icon.png",
+                  fit: BoxFit.contain, height: 35)),
         ),
         body: Center(
             child: Column(children: [

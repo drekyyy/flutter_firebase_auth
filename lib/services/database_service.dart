@@ -26,7 +26,6 @@ class DatabaseService {
 
   static Future createShoppingList(String uid) async {
     DateTime now = DateTime.now();
-    dynamic userName = await getUserName(uid);
     dynamic houseId = await getHouseId(uid);
     await FirebaseFirestore.instance
         .collection('houses')
@@ -35,7 +34,7 @@ class DatabaseService {
         .doc()
         .set({
       'name': 'Brak nazwy',
-      'createdBy': userName,
+      'createdBy': uid,
       'dateWhenCreated': '${now.year}/${now.month}/${now.day}',
       'hourWhenCreated': '${now.hour}:${now.minute}',
       'timestamp': now.millisecondsSinceEpoch
@@ -109,13 +108,6 @@ class DatabaseService {
     snapshot =
         await FirebaseFirestore.instance.collection('users').doc(userid).get();
     return snapshot.data()['houseId'];
-  }
-
-  static Future getUserName(userid) async {
-    dynamic snapshot;
-    snapshot =
-        await FirebaseFirestore.instance.collection('users').doc(userid).get();
-    return snapshot.data()['name'];
   }
 
   static Future checkIfHouseExists(String houseId) async {

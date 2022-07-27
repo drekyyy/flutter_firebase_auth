@@ -21,8 +21,7 @@ class CustomTheme {
             filled: true,
             fillColor: Colors.white,
             border: OutlineInputBorder(
-                borderSide: BorderSide(
-                    color: Color.fromARGB(255, 165, 214, 167), width: 2.0)),
+                borderSide: BorderSide(color: Color(0xFFA5D6A7), width: 2.0)),
             enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(
                     color: Color.fromARGB(255, 165, 214, 167), width: 2.0))),

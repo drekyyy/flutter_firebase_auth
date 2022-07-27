@@ -72,14 +72,18 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
         drawer: const HamburgerMenu(),
-        appBar: AppBar(actions: <Widget>[
-          ElevatedButton(
-            child: const Text("Wyloguj"),
-            onPressed: () {
-              context.read<AuthenticationService>().signOut();
-            },
-          )
-        ]),
+        appBar: AppBar(
+            title: Center(
+                child: Image.asset("assets/app-icon.png",
+                    fit: BoxFit.contain, height: 35)),
+            actions: <Widget>[
+              ElevatedButton(
+                child: const Text("Wyloguj"),
+                onPressed: () {
+                  context.read<AuthenticationService>().signOut();
+                },
+              )
+            ]),
         bottomSheet: Container(
             height: 70,
             child: Center(

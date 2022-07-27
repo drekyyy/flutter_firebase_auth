@@ -24,7 +24,9 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Center(child: Text('Shopping list')),
+          title: Center(
+              child: Image.asset("assets/app-icon.png",
+                  fit: BoxFit.contain, height: 35)),
           backgroundColor: Colors.green.shade200,
         ),
         body: Center(
