@@ -20,16 +20,12 @@ class _SignInPageState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Center(
-              child: Image.asset("assets/app-icon.png",
-                  fit: BoxFit.contain, height: 35)),
-        ),
+        appBar: AppBar(title: const Text('Zaloguj się')),
         body: Center(
             child: Column(children: [
           Flexible(fit: FlexFit.tight, flex: 1, child: Container(height: 10)),
           Flexible(
-              flex: 6,
+              flex: 9,
               child: Container(
                   margin: const EdgeInsets.only(left: 10, right: 10),
                   decoration: const BoxDecoration(
@@ -42,10 +38,6 @@ class _SignInPageState extends State<SignInPage> {
                       child: ListView(
                           padding: const EdgeInsets.all(10),
                           children: [
-                            const Center(
-                                child: Text("Logowanie",
-                                    style: TextStyle(fontSize: 25))),
-                            const SizedBox(height: 20),
                             TextFormField(
                                 validator: (val) {
                                   if (val == null ||
@@ -53,7 +45,7 @@ class _SignInPageState extends State<SignInPage> {
                                       !(RegExp(
                                               r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                                           .hasMatch(val))) {
-                                    return 'Please enter a valid email address.';
+                                    return 'Proszę podać poprawny e-mail.';
                                   }
                                   return null;
                                 },
@@ -65,17 +57,17 @@ class _SignInPageState extends State<SignInPage> {
                             TextFormField(
                                 validator: (val) {
                                   if (val == null || val.isEmpty) {
-                                    return 'Please enter some text.';
+                                    return 'Proszę podać hasło.';
                                   }
                                   if (val.length < 6) {
-                                    return 'Password too short';
+                                    return 'Hasło za krótkie.';
                                   }
                                   return null;
                                 },
                                 obscureText: _isObscure,
                                 controller: passwordController,
                                 decoration: InputDecoration(
-                                  labelText: "Password",
+                                  labelText: "Hasło",
                                   suffixIcon: IconButton(
                                       icon: Icon(_isObscure
                                           ? Icons.visibility
@@ -91,7 +83,6 @@ class _SignInPageState extends State<SignInPage> {
                                 child: Text(firebaseResponse.toString(),
                                     style: const TextStyle(color: Colors.red),
                                     textAlign: TextAlign.center)),
-                            const SizedBox(height: 25),
                             Container(
                                 margin: const EdgeInsets.only(
                                     left: 115, right: 115),
@@ -110,25 +101,8 @@ class _SignInPageState extends State<SignInPage> {
                                         setState(() {});
                                       }
                                     },
-                                    child: const Text("Sign in"))),
-                            const SizedBox(height: 35),
-                            Center(
-                                child: IntrinsicWidth(
-                                    child: Row(
-                              children: [
-                                const Text("Don't have an account yet?"),
-                                const SizedBox(width: 10),
-                                ElevatedButton(
-                                    onPressed: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const SignUpPage()));
-                                    },
-                                    child: const Text("Sign up here"))
-                              ],
-                            ))),
+                                    child: const Text("Zaloguj"))),
+                            const SizedBox(height: 25),
                           ])))),
           Flexible(flex: 1, child: Container(height: 10)),
         ])));

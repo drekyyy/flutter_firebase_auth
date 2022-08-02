@@ -1,3 +1,4 @@
+import 'package:flutter_shopping_list/screens/authenticate/starting_page.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -95,6 +96,6 @@ class AuthenticationWrapper extends StatelessWidget {
     if (firebaseUser != null) {
       return const HomePage();
     }
-    return const SignInPage();
+    return const StartingPage();
   }
 }

@@ -23,17 +23,12 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Center(
-              child: Image.asset("assets/app-icon.png",
-                  fit: BoxFit.contain, height: 35)),
-          backgroundColor: Colors.green.shade200,
-        ),
+        appBar: AppBar(title: const Text('Utwórz konto')),
         body: Center(
             child: Column(children: [
-          Flexible(fit: FlexFit.tight, flex: 1, child: Container(height: 10)),
+          //Flexible(fit: FlexFit.tight, flex: 1, child: Container(height: 10)),
           Flexible(
-              flex: 6,
+              flex: 14,
               child: Container(
                   margin: const EdgeInsets.only(left: 10, right: 10),
                   decoration: const BoxDecoration(
@@ -44,9 +39,6 @@ class _SignUpPageState extends State<SignUpPage> {
                       child: ListView(
                           padding: const EdgeInsets.all(10),
                           children: [
-                            const Center(
-                                child: Text("Rejestracja",
-                                    style: TextStyle(fontSize: 25))),
                             const SizedBox(height: 20),
                             TextFormField(
                                 validator: (val) {
@@ -55,7 +47,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                       !(RegExp(
                                               r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                                           .hasMatch(val))) {
-                                    return 'Please enter a valid email address.';
+                                    return 'Proszę podać poprawny e-mail.';
                                   }
                                   return null;
                                 },
@@ -67,13 +59,13 @@ class _SignUpPageState extends State<SignUpPage> {
                             TextFormField(
                                 validator: (val) {
                                   if (val == null || val.isEmpty) {
-                                    return 'Please enter some text.';
+                                    return 'Proszę podać hasło.';
                                   }
                                   if (val.length < 6) {
-                                    return 'Password too short';
+                                    return 'Hasło za krótkie.';
                                   }
                                   if (password1 != password2) {
-                                    return 'Passwords do not match';
+                                    return 'Hasła się nie zgadzają.';
                                   }
                                   return null;
                                 },
@@ -98,13 +90,13 @@ class _SignUpPageState extends State<SignUpPage> {
                             TextFormField(
                                 validator: (val) {
                                   if (val == null || val.isEmpty) {
-                                    return 'Please enter some text.';
+                                    return 'Proszę podać hasło.';
                                   }
                                   if (val.length < 6) {
-                                    return 'Password too short';
+                                    return 'Hasło za krótkie.';
                                   }
                                   if (password1 != password2) {
-                                    return 'Passwords do not match';
+                                    return 'Hasła się nie zgadzają.';
                                   }
                                   return null;
                                 },
@@ -114,7 +106,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                 obscureText: _isObscure,
                                 controller: passwordController2,
                                 decoration: InputDecoration(
-                                  labelText: "Confirm Password",
+                                  labelText: "Potwierdź hasło",
                                   suffixIcon: IconButton(
                                       icon: Icon(_isObscure
                                           ? Icons.visibility
@@ -136,7 +128,6 @@ class _SignUpPageState extends State<SignUpPage> {
                                 child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
                                       minimumSize: const Size(1, 50),
-                                      //primary: Colors.green.shade200,
                                     ),
                                     onPressed: () async {
                                       if (_formKey.currentState!.validate()) {
@@ -152,23 +143,8 @@ class _SignUpPageState extends State<SignUpPage> {
                                         setState(() {});
                                       }
                                     },
-                                    child: const Text("Sign up"))),
+                                    child: const Text("Zarejestruj"))),
                             const SizedBox(height: 25),
-                            Center(
-                                child: IntrinsicWidth(
-                                    child: Row(
-                              children: [
-                                const Text("Have an account already?"),
-                                const SizedBox(width: 10),
-                                ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                        primary: Colors.green.shade200),
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                    child: const Text("Sign in here"))
-                              ],
-                            ))),
                           ])))),
           Flexible(flex: 1, child: Container(height: 10)),
         ])));
