@@ -48,7 +48,8 @@ class HamburgerMenu extends StatelessWidget {
                 context: context,
                 builder: (BuildContext context) => AlertDialog(
                   title: const Text('ID domu'),
-                  content: Text(houseId),
+                  content: Text(houseId,
+                      style: const TextStyle(color: Colors.white)),
                   actions: <Widget>[
                     Center(
                         child: TextButton(

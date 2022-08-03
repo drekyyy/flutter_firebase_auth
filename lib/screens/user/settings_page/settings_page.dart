@@ -60,6 +60,7 @@ Widget _buildListItem(
   // jesli dokument jest aktualnego uzytkownika
   if (doc['userId'] == userId) {
     return ListTile(
+      tileColor: Colors.white,
       onTap: () {},
       title: Row(
         children: [
@@ -82,6 +83,7 @@ Widget _buildListItem(
     );
   } else {
     return ListTile(
+      tileColor: Colors.white,
       onTap: () {},
       title: Row(
         children: [

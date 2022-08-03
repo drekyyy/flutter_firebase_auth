@@ -35,11 +35,10 @@ Future<String?> customShowDialogWithFields(
                   onChanged: (val) {
                     name = val;
                   },
-                  style: TextStyle(color: Colors.green.shade900),
                   controller: userNameController,
                   decoration: InputDecoration(
-                      labelText: dialogLabelText,
-                      suffixStyle: TextStyle(color: Colors.green.shade900))),
+                    labelText: dialogLabelText,
+                  )),
               Center(
                   child: TextButton(
                 onPressed: () async {
