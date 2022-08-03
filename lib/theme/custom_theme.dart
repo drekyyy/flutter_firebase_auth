@@ -39,7 +39,7 @@ class CustomTheme {
         iconTheme: const IconThemeData(color: Colors.white),
         dialogTheme: DialogTheme(
             backgroundColor: Colors.green.shade900,
-            titleTextStyle: TextStyle(color: Colors.white)));
+            titleTextStyle: const TextStyle(color: Colors.white)));
   }
 
   static ThemeData get darkTheme {

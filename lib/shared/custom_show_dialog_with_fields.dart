@@ -24,10 +24,10 @@ Future<String?> customShowDialogWithFields(
               TextFormField(
                   validator: (val) {
                     if (val == null || val.isEmpty) {
-                      return 'Please enter some text.';
+                      return 'Podaj nazwe.';
                     }
                     if (val.length > maxValueLength) {
-                      return 'Name too long';
+                      return 'Nazwa za długa.';
                     }
 
                     return null;
@@ -35,10 +35,11 @@ Future<String?> customShowDialogWithFields(
                   onChanged: (val) {
                     name = val;
                   },
+                  style: TextStyle(color: Colors.green.shade900),
                   controller: userNameController,
                   decoration: InputDecoration(
-                    labelText: dialogLabelText,
-                  )),
+                      labelText: dialogLabelText,
+                      suffixStyle: TextStyle(color: Colors.green.shade900))),
               Center(
                   child: TextButton(
                 onPressed: () async {
