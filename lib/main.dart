@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'firebase_options.dart';
 
 import 'services/authentication_service.dart';
-import 'screens/authenticate/sign_in_page.dart';
 import 'theme/custom_theme.dart';
 import 'screens/user/home_page/home_page.dart';
 import 'models/user.dart';

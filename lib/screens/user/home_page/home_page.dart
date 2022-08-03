@@ -7,6 +7,7 @@ import 'package:flutter_shopping_list/screens/user/home_page/components/hamburge
 import 'package:flutter_shopping_list/services/authentication_service.dart';
 import 'package:flutter_shopping_list/shared/custom_show_dialog.dart';
 import 'package:flutter_shopping_list/shared/custom_show_dialog_with_fields.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:provider/provider.dart';
 import '../../../main.dart';
 import '../../../models/user.dart';
@@ -121,16 +122,30 @@ class _HomePageState extends State<HomePage> {
                           child: Text('Nie masz jeszcze listy zakupów',
                               style: TextStyle(color: Colors.white)));
                     }
-                    //building horizontal listview for each shopping list
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      scrollDirection: Axis.horizontal,
-                      itemCount: snapshot.data.docs.length,
-                      itemBuilder: (context, index) {
-                        return _buildShoppingList(context,
-                            snapshot.data.docs[index], uid, houseId, index);
-                      },
-                    );
+
+                    return Container(
+                        padding: const EdgeInsets.only(top: 15),
+                        height: MediaQuery.of(context).size.height * 0.78,
+                        child: Swiper(
+                            itemCount: snapshot.data.docs.length,
+                            itemBuilder: (context, index) {
+                              return Container(
+                                padding: const EdgeInsets.only(bottom: 25),
+                                child: _buildShoppingList(
+                                    context,
+                                    snapshot.data.docs[index],
+                                    uid,
+                                    houseId,
+                                    index),
+                              );
+                            },
+                            scale: 0.92,
+                            viewportFraction: 0.95,
+                            pagination: const SwiperPagination(
+                                builder: DotSwiperPaginationBuilder(
+                                    color: Colors.grey,
+                                    activeColor: Colors.white),
+                                alignment: Alignment.bottomCenter)));
                   });
             }));
   }
@@ -140,12 +155,12 @@ Widget _buildShoppingList(BuildContext context, DocumentSnapshot listDoc,
     String userId, String houseId, int index) {
   return Container(
       decoration: BoxDecoration(
-          border: Border.all(color: Colors.white),
-          borderRadius: const BorderRadius.all(Radius.circular(0))),
-      margin: const EdgeInsets.only(top: 25, left: 25, right: 25, bottom: 100),
-      //padding: const EdgeInsets.all(10),
-      width: MediaQuery.of(context).size.width - 50,
-      height: MediaQuery.of(context).size.height - 340,
+          border: Border.all(color: Colors.white, width: 2),
+          borderRadius: const BorderRadius.all(Radius.circular(20))),
+      margin: const EdgeInsets.only(bottom: 20),
+      padding: const EdgeInsets.all(10),
+      //width: MediaQuery.of(context).size.width - 50,
+      //height: MediaQuery.of(context).size.height - 540,
       child: SingleChildScrollView(
           physics: ScrollPhysics(),
           child: Column(children: [
@@ -238,6 +253,7 @@ Widget _buildShoppingList(BuildContext context, DocumentSnapshot listDoc,
                         child: const Text('Nie masz produktów na tej liście',
                             style: TextStyle(color: Colors.white)));
                   }
+
                   return ListView.builder(
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
@@ -252,11 +268,10 @@ Widget _buildShoppingList(BuildContext context, DocumentSnapshot listDoc,
                           houseId.toString());
                     },
                   );
-                }),
+                })
           ])));
 }
 
-// usunac dodaj produkt text, zostawic sam plus. dodac smietnik usuniecie listy, na longpress usuniecie produktu
 Widget _buildListOfProducts(BuildContext context, int index, String listId,
     DocumentSnapshot productDoc, String userId, String houseId) {
   return ListTile(
