@@ -28,6 +28,21 @@ class DatabaseService {
   static Future createShoppingList(String uid) async {
     DateTime now = DateTime.now();
     dynamic houseId = await getHouseId(uid);
+    String month = now.month.toString();
+    String day = now.day.toString();
+    String minute = now.minute.toString();
+    int monthInt = now.month;
+    int dayInt = now.day;
+    int minuteInt = now.minute;
+    if (monthInt < 10) {
+      month = "0$month";
+    }
+    if (dayInt < 10) {
+      day = "0$day";
+    }
+    if (minuteInt < 10) {
+      minute = "0$minute";
+    }
     await FirebaseFirestore.instance
         .collection('houses')
         .doc(houseId)
@@ -36,8 +51,8 @@ class DatabaseService {
         .set({
       'name': 'Brak nazwy',
       'createdBy': uid,
-      'dateWhenCreated': '${now.year}/${now.month}/${now.day}',
-      'hourWhenCreated': '${now.hour}:${now.minute}',
+      'dateWhenCreated': '${now.year}/$month/$day',
+      'hourWhenCreated': '${now.hour}:$minute',
       'timestamp': now.millisecondsSinceEpoch
     });
   }
