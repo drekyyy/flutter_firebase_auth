@@ -74,8 +74,8 @@ class _HomePageState extends State<HomePage> {
         drawer: const HamburgerMenu(),
         appBar: AppBar(
             title: Center(
-                child: Image.asset("assets/app-icon.png",
-                    fit: BoxFit.contain, height: 35)),
+                child: Image.asset("assets/logo-white.png",
+                    fit: BoxFit.contain, height: 30)),
             actions: <Widget>[
               ElevatedButton(
                 child: const Text("Wyloguj"),

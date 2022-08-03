@@ -60,30 +60,28 @@ Widget _buildListItem(
   // jesli dokument jest aktualnego uzytkownika
   if (doc['userId'] == userId) {
     return ListTile(
-      tileColor: Colors.white,
       onTap: () {},
       title: Row(
         children: [
           Expanded(child: Text('${doc['name']} (Ty)')),
           IconButton(
-              onPressed: () {
-                customShowDialogWithFields(
-                    context,
-                    'Jak chcesz się nazywać?',
-                    'Nowa nazwa',
-                    20,
-                    DatabaseService.changeNameOfUser,
-                    userId,
-                    '');
-              },
-              icon: const Icon(Icons.edit),
-              color: const Color.fromARGB(255, 165, 214, 167)),
+            onPressed: () {
+              customShowDialogWithFields(
+                  context,
+                  'Jak chcesz się nazywać?',
+                  'Nowa nazwa',
+                  20,
+                  DatabaseService.changeNameOfUser,
+                  userId,
+                  '');
+            },
+            icon: const Icon(Icons.edit),
+          ),
         ],
       ),
     );
   } else {
     return ListTile(
-      tileColor: Colors.white,
       onTap: () {},
       title: Row(
         children: [

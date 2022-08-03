@@ -32,7 +32,7 @@ class _SignUpPageState extends State<SignUpPage> {
               child: Container(
                   margin: const EdgeInsets.only(left: 10, right: 10),
                   decoration: const BoxDecoration(
-                      color: Colors.white,
+                      //color: Colors.white,
                       borderRadius: BorderRadius.all(Radius.circular(20))),
                   child: Form(
                       key: _formKey,

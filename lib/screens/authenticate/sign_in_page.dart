@@ -29,7 +29,7 @@ class _SignInPageState extends State<SignInPage> {
               child: Container(
                   margin: const EdgeInsets.only(left: 10, right: 10),
                   decoration: const BoxDecoration(
-                      color: Colors.white,
+                      //color: Colors.white,
                       borderRadius: BorderRadius.all(Radius.circular(20))),
                   //padding: EdgeInsets.all(10),
 
@@ -96,6 +96,7 @@ class _SignInPageState extends State<SignInPage> {
                                             .read<AuthenticationService>()
                                             .signIn(emailController.text.trim(),
                                                 passwordController.text.trim());
+                                        Navigator.pop(context);
                                       } else {
                                         firebaseResponse = "";
                                         setState(() {});

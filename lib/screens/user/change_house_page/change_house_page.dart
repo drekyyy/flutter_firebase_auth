@@ -31,7 +31,7 @@ class _ChangeHousePageState extends State<ChangeHousePage> {
                         const EdgeInsets.only(left: 10, right: 10, top: 15),
                     margin: const EdgeInsets.only(left: 10, right: 10),
                     decoration: const BoxDecoration(
-                        color: Colors.white,
+                        color: Color.fromRGBO(27, 94, 32, 1),
                         borderRadius: BorderRadius.all(Radius.circular(20))),
                     child: Form(
                         key: _formKey,

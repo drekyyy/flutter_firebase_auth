@@ -47,9 +47,7 @@ class HamburgerMenu extends StatelessWidget {
               showDialog<String>(
                 context: context,
                 builder: (BuildContext context) => AlertDialog(
-                  title: const Text('ID domu',
-                      style:
-                          TextStyle(color: Color.fromARGB(255, 165, 214, 167))),
+                  title: const Text('ID domu'),
                   content: Text(houseId),
                   actions: <Widget>[
                     Center(
@@ -58,9 +56,7 @@ class HamburgerMenu extends StatelessWidget {
                         Clipboard.setData(ClipboardData(text: houseId));
                         Navigator.pop(context);
                       },
-                      child: const Text('Kopiuj do schowka',
-                          style: TextStyle(
-                              color: Color.fromARGB(255, 165, 214, 167))),
+                      child: const Text('Kopiuj do schowka'),
                     )),
                   ],
                 ),

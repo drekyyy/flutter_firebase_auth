@@ -10,8 +10,7 @@ Future<String?> customShowDialog(
   return showDialog<String>(
     context: context,
     builder: (BuildContext context) => AlertDialog(
-      title: Text(dialogTitle,
-          style: const TextStyle(color: Color.fromARGB(255, 165, 214, 167))),
+      title: Text(dialogTitle),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -21,8 +20,7 @@ Future<String?> customShowDialog(
               await function(arg1, arg2, arg3);
               Navigator.pop(context);
             },
-            child: const Text('Tak',
-                style: TextStyle(color: Color.fromARGB(255, 165, 214, 167))),
+            child: const Text('Tak'),
           )),
         ],
       ),

@@ -15,8 +15,7 @@ Future<String?> customShowDialogWithFields(
   return showDialog<String>(
     context: context,
     builder: (BuildContext context) => AlertDialog(
-      title: Text(dialogTitle,
-          style: const TextStyle(color: Color.fromARGB(255, 165, 214, 167))),
+      title: Text(dialogTitle),
       content: Form(
           key: formKey,
           child: Column(
@@ -51,9 +50,9 @@ Future<String?> customShowDialogWithFields(
                     firebaseResponse = '';
                   }
                 },
-                child: const Text('Ok',
-                    style:
-                        TextStyle(color: Color.fromARGB(255, 165, 214, 167))),
+                child: const Text(
+                  'Ok',
+                ),
               )),
             ],
           )),
