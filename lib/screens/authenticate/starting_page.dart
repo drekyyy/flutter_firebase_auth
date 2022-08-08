@@ -22,10 +22,10 @@ class StartingPage extends StatelessWidget {
                 const SizedBox(height: 30),
                 Flexible(
                     flex: 2,
-                    child: Image.asset("assets/logo-white.png",
+                    child: Image.asset("assets/app-icon.png",
                         fit: BoxFit.contain, height: 55)),
                 Flexible(
-                    fit: FlexFit.tight, flex: 11, child: Container(height: 10)),
+                    fit: FlexFit.tight, flex: 10, child: Container(height: 10)),
                 Flexible(
                     flex: 9,
                     child: Container(
@@ -76,45 +76,6 @@ class StartingPage extends StatelessWidget {
                                     ))),
                           ],
                         )))
-                // Flexible(
-                //     flex: 1,
-                //     child: Center(
-                //         child: Text(
-                //             'Twórz listy zakupów wspólnie z rodziną. Już nie zapomnisz o żadnym produkcie.',
-                //             style:
-                //                 TextStyle(color: Colors.white, fontSize: 30)))),
-                // Flexible(
-                //     flex: 1,
-                //     child: ElevatedButton(
-                //         style: ElevatedButton.styleFrom(
-                //           minimumSize: const Size(300, 45),
-                //         ),
-                //         onPressed: () {
-                //           Navigator.push(
-                //               context,
-                //               MaterialPageRoute(
-                //                   builder: (context) => const SignUpPage()));
-                //         },
-                //         child: const Text('Utwórz konto'))),
-                // const SizedBox(
-                //   height: 10,
-                // ),
-                // Flexible(
-                //     flex: 1,
-                //     child: ElevatedButton(
-                //         style: ElevatedButton.styleFrom(
-                //             minimumSize: const Size(300, 45),
-                //             primary: Colors.white),
-                //         onPressed: () {
-                //           Navigator.push(
-                //               context,
-                //               MaterialPageRoute(
-                //                   builder: (context) => const SignInPage()));
-                //         },
-                //         child: const Text('Mam już konto',
-                //             style: TextStyle(
-                //               color: Colors.black,
-                //             )))),
               ],
             )));
   }

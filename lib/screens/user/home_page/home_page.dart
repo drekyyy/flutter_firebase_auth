@@ -1,3 +1,4 @@
+import 'package:card_swiper/card_swiper.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -7,7 +8,7 @@ import 'package:flutter_shopping_list/screens/user/home_page/components/hamburge
 import 'package:flutter_shopping_list/services/authentication_service.dart';
 import 'package:flutter_shopping_list/shared/custom_show_dialog.dart';
 import 'package:flutter_shopping_list/shared/custom_show_dialog_with_fields.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
+
 import 'package:provider/provider.dart';
 import '../../../main.dart';
 import '../../../models/user.dart';
@@ -76,7 +77,7 @@ class _HomePageState extends State<HomePage> {
         appBar: AppBar(
             title: Center(
                 child: Image.asset("assets/logo-white.png",
-                    fit: BoxFit.contain, height: 30)),
+                    fit: BoxFit.contain, height: 45)),
             actions: <Widget>[
               ElevatedButton(
                 child: const Text("Wyloguj"),
@@ -85,12 +86,13 @@ class _HomePageState extends State<HomePage> {
                 },
               )
             ]),
-        bottomSheet: Container(
+        bottomSheet: SizedBox(
             height: 70,
             child: Center(
                 child: TextButton(
                     onPressed: () async {
                       await DatabaseService.createShoppingList(uid);
+                      setState(() {});
                     },
                     child: Column(
                       children: const [
@@ -125,22 +127,23 @@ class _HomePageState extends State<HomePage> {
 
                     return Container(
                         padding: const EdgeInsets.only(top: 15),
-                        height: MediaQuery.of(context).size.height * 0.78,
+                        height: MediaQuery.of(context).size.height * 0.70,
                         child: Swiper(
                             itemCount: snapshot.data.docs.length,
                             itemBuilder: (context, index) {
                               return Container(
                                 padding: const EdgeInsets.only(bottom: 25),
                                 child: _buildShoppingList(
-                                    context,
-                                    snapshot.data.docs[index],
-                                    uid,
-                                    houseId,
-                                    index),
+                                  context,
+                                  snapshot.data.docs[index],
+                                  uid,
+                                  houseId,
+                                  index,
+                                ),
                               );
                             },
-                            scale: 0.92,
-                            viewportFraction: 0.95,
+                            scale: 0.90,
+                            viewportFraction: 0.90,
                             pagination: const SwiperPagination(
                                 builder: DotSwiperPaginationBuilder(
                                     color: Colors.grey,
@@ -148,6 +151,164 @@ class _HomePageState extends State<HomePage> {
                                 alignment: Alignment.bottomCenter)));
                   });
             }));
+  }
+}
+
+class BuildShoppingList extends StatefulWidget {
+  const BuildShoppingList(
+      {Key? key,
+      required this.context,
+      required this.listDoc,
+      required this.userId,
+      required this.houseId,
+      required this.index,
+      required this.controller})
+      : super(key: key);
+  final BuildContext context;
+  final DocumentSnapshot listDoc;
+  final String userId;
+  final String houseId;
+  final int index;
+  final SwiperController controller;
+  @override
+  State<BuildShoppingList> createState() => _BuildShoppingListState();
+}
+
+class _BuildShoppingListState extends State<BuildShoppingList> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        decoration: BoxDecoration(
+            border: Border.all(color: Colors.white, width: 2),
+            borderRadius: const BorderRadius.all(Radius.circular(20))),
+        margin: const EdgeInsets.only(bottom: 20),
+        padding: const EdgeInsets.all(10),
+        //width: MediaQuery.of(context).size.width - 50,
+        //height: MediaQuery.of(context).size.height - 540,
+        child: SingleChildScrollView(
+            physics: const ScrollPhysics(),
+            child: Column(children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                          padding: const EdgeInsets.only(left: 5),
+                          child: TextButton(
+                              onLongPress: () async {
+                                await customShowDialog(
+                                    context,
+                                    'Czy usunąć tą liste?',
+                                    DatabaseService.deleteShoppingList,
+                                    widget.houseId,
+                                    widget.listDoc.id,
+                                    '');
+                                //setState(() {});
+                                //rebuildAllChildren(context);
+                                widget.controller.move(widget.index - 1);
+                                print(widget.controller.move(widget.index - 1));
+                              },
+                              onPressed: () {},
+                              child: Row(children: [
+                                const Icon(Icons.numbers, size: 18),
+                                Text('${widget.index + 1}  ',
+                                    style:
+                                        const TextStyle(color: Colors.white)),
+                                const Icon(Icons.date_range, size: 18),
+                                Text(' ${widget.listDoc['dateWhenCreated']}  ',
+                                    style:
+                                        const TextStyle(color: Colors.white)),
+                                const Icon(Icons.timer, size: 18),
+                                Text(' ${widget.listDoc['hourWhenCreated']}',
+                                    style:
+                                        const TextStyle(color: Colors.white)),
+                              ]))),
+                      TextButton(
+                          onPressed: () {},
+                          onLongPress: () {
+                            customShowDialogWithFields(
+                                context,
+                                'Zmiana nazwy listy',
+                                "Nowa nazwa listy",
+                                20,
+                                DatabaseService.changeNameOfShoppingList,
+                                widget.houseId,
+                                widget.listDoc.id.toString());
+                          },
+                          child: Text(widget.listDoc['name'],
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                  color: Colors.white, fontSize: 16))),
+                    ],
+                  ),
+                  TextButton(
+                      onPressed: () {
+                        customShowDialogWithFields(
+                            context,
+                            'Dodaj produkt',
+                            'Nazwa produktu',
+                            30,
+                            DatabaseService.addProductToShoppingList,
+                            widget.houseId,
+                            widget.listDoc.id.toString());
+                      },
+                      child: Column(children: const [
+                        Icon(Icons.add),
+                        Text('Dodaj'),
+                        Text('Produkt')
+                      ]))
+                ],
+              ),
+              SizedBox(
+                  height: 2,
+                  width: MediaQuery.of(context).size.width - 50,
+                  child: const DecoratedBox(
+                    decoration: BoxDecoration(color: Colors.white),
+                  )),
+              StreamBuilder(
+                  stream: FirebaseFirestore.instance
+                      .collection('houses')
+                      .doc(widget.houseId.toString())
+                      .collection('shopping-lists')
+                      .doc(widget.listDoc.id.toString())
+                      .collection('products')
+                      .snapshots(),
+                  builder: (context, AsyncSnapshot snapshot) {
+                    if (!snapshot.hasData) return const Loading();
+                    if (snapshot.data.docs.length == 0) {
+                      return Container(
+                          padding: const EdgeInsets.only(top: 20),
+                          child: const Text('Nie masz produktów na tej liście',
+                              style: TextStyle(color: Colors.white)));
+                    }
+
+                    return ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: snapshot.data.docs.length,
+                      itemBuilder: (context, index) {
+                        return _buildListOfProducts(
+                            context,
+                            index,
+                            widget.listDoc.id.toString(),
+                            snapshot.data.docs[index],
+                            widget.userId,
+                            widget.houseId.toString());
+                      },
+                    );
+                  })
+            ])));
+  }
+
+  void rebuildAllChildren(BuildContext context) {
+    void rebuild(Element el) {
+      el.markNeedsBuild();
+      el.visitChildren(rebuild);
+    }
+
+    (context as Element).visitChildren(rebuild);
   }
 }
 
@@ -162,20 +323,19 @@ Widget _buildShoppingList(BuildContext context, DocumentSnapshot listDoc,
       //width: MediaQuery.of(context).size.width - 50,
       //height: MediaQuery.of(context).size.height - 540,
       child: SingleChildScrollView(
-          physics: ScrollPhysics(),
+          physics: const ScrollPhysics(),
           child: Column(children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Flexible(
-                    child: Column(
+                Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
                         padding: const EdgeInsets.only(left: 5),
                         child: TextButton(
-                            onLongPress: () {
-                              customShowDialog(
+                            onLongPress: () async {
+                              await customShowDialog(
                                   context,
                                   'Czy usunąć tą liste?',
                                   DatabaseService.deleteShoppingList,
@@ -212,7 +372,7 @@ Widget _buildShoppingList(BuildContext context, DocumentSnapshot listDoc,
                             style: const TextStyle(
                                 color: Colors.white, fontSize: 16))),
                   ],
-                )),
+                ),
                 TextButton(
                     onPressed: () {
                       customShowDialogWithFields(

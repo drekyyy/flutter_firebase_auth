@@ -18,6 +18,7 @@ Future<String?> customShowDialog(
               child: TextButton(
             onPressed: () async {
               await function(arg1, arg2, arg3);
+
               Navigator.pop(context);
             },
             child: const Text('Tak'),
