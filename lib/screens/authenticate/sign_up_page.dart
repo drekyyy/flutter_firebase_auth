@@ -26,13 +26,11 @@ class _SignUpPageState extends State<SignUpPage> {
         appBar: AppBar(title: const Text('Utwórz konto')),
         body: Center(
             child: Column(children: [
-          //Flexible(fit: FlexFit.tight, flex: 1, child: Container(height: 10)),
           Flexible(
               flex: 14,
               child: Container(
                   margin: const EdgeInsets.only(left: 10, right: 10),
                   decoration: const BoxDecoration(
-                      //color: Colors.white,
                       borderRadius: BorderRadius.all(Radius.circular(20))),
                   child: Form(
                       key: _formKey,
@@ -122,29 +120,23 @@ class _SignUpPageState extends State<SignUpPage> {
                                     style: const TextStyle(color: Colors.red),
                                     textAlign: TextAlign.center)),
                             const SizedBox(height: 10),
-                            Container(
-                                margin: const EdgeInsets.only(
-                                    left: 115, right: 115),
-                                child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      minimumSize: const Size(1, 50),
-                                    ),
-                                    onPressed: () async {
-                                      if (_formKey.currentState!.validate()) {
-                                        firebaseResponse = await context
-                                            .read<AuthenticationService>()
-                                            .signUp(
-                                                emailController.text.trim(),
-                                                passwordController1.text
-                                                    .trim());
-                                        Navigator.pop(context);
-                                      } else {
-                                        firebaseResponse = "";
-                                        setState(() {});
-                                      }
-                                    },
-                                    child: const Text("Zarejestruj"))),
-                            const SizedBox(height: 25),
+                            ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  minimumSize: const Size(300, 45),
+                                ),
+                                onPressed: () async {
+                                  if (_formKey.currentState!.validate()) {
+                                    firebaseResponse = await context
+                                        .read<AuthenticationService>()
+                                        .signUp(emailController.text.trim(),
+                                            passwordController1.text.trim());
+                                    Navigator.pop(context);
+                                  } else {
+                                    firebaseResponse = "";
+                                    setState(() {});
+                                  }
+                                },
+                                child: const Text("Zarejestruj")),
                           ])))),
           Flexible(flex: 1, child: Container(height: 10)),
         ])));

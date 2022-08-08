@@ -62,16 +62,16 @@ dev_dependencies:
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/app-icon.png"
+  image_path: "assets/images/app-icon.png"
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter.
 flutter:
   assets:
-    - assets/app-icon.png
-    - assets/logo-white.png
-    - assets/starting-image.jpg
+    - assets/images/app-icon.png
+    - assets/images/logo-white.png
+    - assets/images/starting-image.jpg
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

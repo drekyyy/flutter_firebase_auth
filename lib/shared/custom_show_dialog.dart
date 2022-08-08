@@ -15,7 +15,7 @@ Future<String?> customShowDialog(
         mainAxisSize: MainAxisSize.min,
         children: [
           Center(
-              child: TextButton(
+              child: ElevatedButton(
             onPressed: () async {
               await function(arg1, arg2, arg3);
 

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 import 'sign_in_page.dart';
 import 'sign_up_page.dart';
@@ -12,17 +10,18 @@ class StartingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
+            height: MediaQuery.of(context).size.height,
             constraints: const BoxConstraints.expand(),
             decoration: const BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage("assets/starting-image.jpg"),
+                    image: AssetImage("assets/images/starting-image.jpg"),
                     fit: BoxFit.cover)),
             child: Column(
               children: [
                 const SizedBox(height: 30),
                 Flexible(
                     flex: 2,
-                    child: Image.asset("assets/app-icon.png",
+                    child: Image.asset("assets/images/app-icon.png",
                         fit: BoxFit.contain, height: 55)),
                 Flexible(
                     fit: FlexFit.tight, flex: 10, child: Container(height: 10)),
@@ -45,9 +44,16 @@ class StartingPage extends StatelessWidget {
                               height: 20,
                             ),
                             ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  minimumSize: const Size(300, 45),
-                                ),
+                                style: ButtonStyle(
+                                    foregroundColor:
+                                        MaterialStateProperty.all<Color>(
+                                            Colors.white),
+                                    minimumSize:
+                                        MaterialStateProperty.all<Size>(
+                                            const Size(300, 45)),
+                                    backgroundColor:
+                                        MaterialStateProperty.all<Color>(
+                                            Colors.green.shade900)),
                                 onPressed: () {
                                   Navigator.push(
                                       context,
@@ -61,8 +67,8 @@ class StartingPage extends StatelessWidget {
                             ),
                             ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                    minimumSize: const Size(300, 45),
-                                    primary: Colors.white),
+                                  minimumSize: const Size(300, 45),
+                                ),
                                 onPressed: () {
                                   Navigator.push(
                                       context,

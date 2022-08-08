@@ -39,8 +39,9 @@ Future<String?> customShowDialogWithFields(
                   decoration: InputDecoration(
                     labelText: dialogLabelText,
                   )),
+              const SizedBox(height: 20),
               Center(
-                  child: TextButton(
+                  child: ElevatedButton(
                 onPressed: () async {
                   if (formKey.currentState!.validate()) {
                     function(arg1, arg2, name);

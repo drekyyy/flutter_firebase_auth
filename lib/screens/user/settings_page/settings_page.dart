@@ -41,6 +41,10 @@ class _SettingsPageState extends State<SettingsPage> {
                           itemCount: snapshot.data.docs.length,
                           itemBuilder: (context, index) {
                             return Container(
+                                decoration: const BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(5))),
                                 margin: const EdgeInsets.only(
                                     left: 10, right: 10, bottom: 10),
                                 child: _buildListItem(
@@ -60,7 +64,6 @@ Widget _buildListItem(
   // jesli dokument jest aktualnego uzytkownika
   if (doc['userId'] == userId) {
     return ListTile(
-      tileColor: Colors.white,
       onTap: () {},
       title: Row(
         children: [
@@ -83,7 +86,6 @@ Widget _buildListItem(
     );
   } else {
     return ListTile(
-      tileColor: Colors.white,
       onTap: () {},
       title: Row(
         children: [

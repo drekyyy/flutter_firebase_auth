@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class CustomTheme {
   static ThemeData get lightTheme {
     return ThemeData(
-        // fontFamily: 'Roboto',
+        fontFamily: 'Roboto',
         canvasColor: Colors.green.shade900,
         backgroundColor: Colors.green.shade900,
         textButtonTheme: TextButtonThemeData(
@@ -32,9 +32,9 @@ class CustomTheme {
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ButtonStyle(
               elevation: MaterialStateProperty.all<double>(0),
-              foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-              backgroundColor:
-                  MaterialStateProperty.all<Color>(Colors.green.shade900)),
+              foregroundColor:
+                  MaterialStateProperty.all<Color>(Colors.green.shade900),
+              backgroundColor: MaterialStateProperty.all<Color>(Colors.white)),
         ),
         drawerTheme: const DrawerThemeData(elevation: 0),
         iconTheme: const IconThemeData(color: Colors.white),

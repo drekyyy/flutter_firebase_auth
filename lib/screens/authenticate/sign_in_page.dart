@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_shopping_list/services/authentication_service.dart';
-import 'package:flutter_shopping_list/screens/authenticate/sign_up_page.dart';
 import 'package:provider/provider.dart';
 
 class SignInPage extends StatefulWidget {
@@ -29,10 +28,7 @@ class _SignInPageState extends State<SignInPage> {
               child: Container(
                   margin: const EdgeInsets.only(left: 10, right: 10),
                   decoration: const BoxDecoration(
-                      //color: Colors.white,
                       borderRadius: BorderRadius.all(Radius.circular(20))),
-                  //padding: EdgeInsets.all(10),
-
                   child: Form(
                       key: _formKey,
                       child: ListView(
@@ -78,32 +74,28 @@ class _SignInPageState extends State<SignInPage> {
                                         });
                                       }),
                                 )),
-                            const SizedBox(height: 25),
+                            const SizedBox(height: 10),
                             Center(
                                 child: Text(firebaseResponse.toString(),
                                     style: const TextStyle(color: Colors.red),
                                     textAlign: TextAlign.center)),
-                            Container(
-                                margin: const EdgeInsets.only(
-                                    left: 115, right: 115),
-                                child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      minimumSize: const Size(1, 50),
-                                    ),
-                                    onPressed: () async {
-                                      if (_formKey.currentState!.validate()) {
-                                        firebaseResponse = await context
-                                            .read<AuthenticationService>()
-                                            .signIn(emailController.text.trim(),
-                                                passwordController.text.trim());
-                                        Navigator.pop(context);
-                                      } else {
-                                        firebaseResponse = "";
-                                        setState(() {});
-                                      }
-                                    },
-                                    child: const Text("Zaloguj"))),
-                            const SizedBox(height: 25),
+                            ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  minimumSize: const Size(300, 45),
+                                ),
+                                onPressed: () async {
+                                  if (_formKey.currentState!.validate()) {
+                                    firebaseResponse = await context
+                                        .read<AuthenticationService>()
+                                        .signIn(emailController.text.trim(),
+                                            passwordController.text.trim());
+                                    Navigator.pop(context);
+                                  } else {
+                                    firebaseResponse = "";
+                                    setState(() {});
+                                  }
+                                },
+                                child: const Text("Zaloguj")),
                           ])))),
           Flexible(flex: 1, child: Container(height: 10)),
         ])));
