@@ -46,7 +46,7 @@ class _ChangeHousePageState extends State<ChangeHousePage> {
                                 if (value == null || value.isEmpty) {
                                   return 'Proszę podać ID.';
                                 } else if (value.length < 10) {
-                                  return 'ID Domu za krótkie';
+                                  return 'ID Domu za krótkie.';
                                 }
                                 return null;
                               },
@@ -54,7 +54,9 @@ class _ChangeHousePageState extends State<ChangeHousePage> {
                             const SizedBox(height: 10),
                             Center(
                                 child: Text(houseIdMessage,
-                                    style: const TextStyle(color: Colors.red),
+                                    style: const TextStyle(
+                                        color:
+                                            Color.fromRGBO(255, 205, 210, 1)),
                                     textAlign: TextAlign.center)),
                             const SizedBox(height: 25),
                             ElevatedButton(
