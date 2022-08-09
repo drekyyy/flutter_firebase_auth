@@ -44,9 +44,9 @@ class _ChangeHousePageState extends State<ChangeHousePage> {
                               ),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return 'Please enter some text.';
+                                  return 'Proszę podać ID.';
                                 } else if (value.length < 10) {
-                                  return 'House ID is too short.';
+                                  return 'ID Domu za krótkie';
                                 }
                                 return null;
                               },
@@ -68,7 +68,8 @@ class _ChangeHousePageState extends State<ChangeHousePage> {
                                           houseIdController.text.trim(), uid);
                                       Navigator.pop(context);
                                     } else {
-                                      houseIdMessage = 'No such house.';
+                                      houseIdMessage =
+                                          'Nie ma domu o danym ID.';
                                     }
 
                                     setState(() {});
