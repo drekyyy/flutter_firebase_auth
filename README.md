@@ -1,16 +1,9 @@
 # flutter_shopping_list
 
-A new Flutter project.
+Aplikacja mobilna w której użytkownicy znajdujący się w tym samym domu (do którego można dołączyć podając house id), mogą tworzyć wiele list zakupów oraz dodawać do nich produkty
 
-## Getting Started
+![alt text](https://i.imgur.com/xoS3q4e.jpg)
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+image 1                                |  image2
+:-------------------------------------:|:-------------------------------------:
+![](https://i.imgur.com/PFlcP3S.jpg)   |  ![](https://i.imgur.com/Hev47PH.jpg)
