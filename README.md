@@ -18,7 +18,7 @@ Aplikacja mobilna w której użytkownicy znajdujący się w tym samym domu (do k
 
                     1.                       |                     2.                     |                     3.
 | ------------------------------------------ | ------------------------------------------ | ------------------------------------------- |
-![](https://i.imgur.com/xoS3q4e.jpg)         | ![](https://i.imgur.com/bXCPynl.jpg)        | ![](https://i.imgur.com/fyhhU6j.jpg)
+![](https://i.imgur.com/xoS3q4e.jpg) | ![](https://i.imgur.com/bXCPynl.jpg) | ![](https://i.imgur.com/fyhhU6j.jpg)
 
 1. Strona startowa (starting_page.dart).
 2. Logowanie z walidacją po stronie klienta i serwera (sign_in.dart).         
@@ -27,7 +27,7 @@ Aplikacja mobilna w której użytkownicy znajdujący się w tym samym domu (do k
 
                     4.                       |                     5.                     |                6.
 | ------------------------------------------ | ------------------------------------------ | ------------------------------------------ |
-![](https://i.imgur.com/PFlcP3S.jpg)         |  ![](https://i.imgur.com/Hev47PH.jpg)      |  ![](https://i.imgur.com/Hev47PH.jpg) 
+![](https://i.imgur.com/PFlcP3S.jpg) | ![](https://i.imgur.com/Hev47PH.jpg)  | ![](https://i.imgur.com/Hev47PH.jpg) 
 
 Zdjęcia 4, 5, 6 są ze strony głównej zalogowanego użytkownika. Znajdują się na niej wszystkie listy zakupów z produktami wyświetlane w kartach.
 Na samej górze listy zakupów widać, jak wcześnie została ona założona, karta z numerem #1 jest najstarsza (listy sortowane są po timestampie rosnąco).
