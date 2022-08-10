@@ -16,9 +16,9 @@ Aplikacja mobilna w której użytkownicy znajdujący się w tym samym domu (do k
   - url_launcher: ^6.1.5 (umożliwia otwieranie linków, np. gdy klikniemy w ikone aplikacji)
 
 
-                    1.                       |                     2.                     |                     3.
-:-------------------------------------------:|:------------------------------------------:|:-------------------------------------------:
-![](https://i.imgur.com/xoS3q4e.jpg)         |![](https://i.imgur.com/bXCPynl.jpg)        |![](https://i.imgur.com/fyhhU6j.jpg
+                    1.                       |                     2.                      |                     3.
+:-------------------------------------------:|:-------------------------------------------:|:-------------------------------------------:
+![](https://i.imgur.com/xoS3q4e.jpg)         | ![](https://i.imgur.com/bXCPynl.jpg)        | ![](https://i.imgur.com/fyhhU6j.jpg
 
 1. Strona startowa (starting_page.dart).
 2. Logowanie z walidacją po stronie klienta i serwera (sign_in.dart).         
