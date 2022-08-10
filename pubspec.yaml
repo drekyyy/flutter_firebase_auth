@@ -44,6 +44,7 @@ dependencies:
   flutter_local_notifications: ^9.7.0
   cloud_functions: ^3.3.3
   card_swiper: ^2.0.4
+  url_launcher: ^6.1.5
 
   
 dev_dependencies:

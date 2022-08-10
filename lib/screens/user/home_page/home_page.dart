@@ -10,6 +10,7 @@ import 'package:flutter_shopping_list/services/authentication_service.dart';
 import 'package:flutter_shopping_list/shared/custom_show_dialog.dart';
 import 'package:flutter_shopping_list/shared/custom_show_dialog_with_fields.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../main.dart';
 import '../../../models/user.dart';
 import '../../../services/database_service.dart';
@@ -69,13 +70,22 @@ class _HomePageState extends State<HomePage> {
 
   Widget build(BuildContext context) {
     final String uid = Provider.of<SimpleUser?>(context)!.uid;
+    final Uri _url =
+        Uri.parse('https://github.com/drekyyy/flutter_shopping_list');
 
     return Scaffold(
         drawer: const HamburgerMenu(),
         appBar: AppBar(
             title: Center(
-                child: Image.asset("assets/images/logo-white.png",
-                    fit: BoxFit.contain, height: 45)),
+                child: IconButton(
+              iconSize: 45,
+              icon: Image.asset("assets/images/logo-white.png"),
+              onPressed: () async {
+                if (await canLaunchUrl(_url)) {
+                  await launchUrl(_url);
+                }
+              },
+            )),
             actions: <Widget>[
               IconButton(
                   onPressed: () {
@@ -96,8 +106,7 @@ class _HomePageState extends State<HomePage> {
                         Icon(Icons.add_box),
                         SizedBox(height: 5),
                         Text('Nowa lista',
-                            style: TextStyle(
-                                color: Colors.white, fontFamily: 'Roboto')),
+                            style: TextStyle(color: Colors.white)),
                       ],
                     )))),
         body: FutureBuilder(
@@ -213,14 +222,15 @@ Widget _buildShoppingList(BuildContext context, DocumentSnapshot listDoc,
                 ),
                 TextButton(
                     onPressed: () {
-                      customShowDialogWithFields(
+                      customShowDialogWithFieldsFourArgsFun(
                           context,
                           'Dodaj produkt',
                           'Nazwa produktu',
                           30,
                           DatabaseService.addProductToShoppingList,
                           houseId,
-                          listDoc.id.toString());
+                          listDoc.id.toString(),
+                          userId);
                     },
                     child: Column(children: const [
                       Icon(Icons.add),
@@ -272,9 +282,12 @@ Widget _buildShoppingList(BuildContext context, DocumentSnapshot listDoc,
 
 Widget _buildListOfProducts(BuildContext context, int index, String listId,
     DocumentSnapshot productDoc, String userId, String houseId) {
+  String userName = '';
+  if (productDoc['createdByUid'] != userId) {
+    userName = productDoc['createdByName'];
+  }
   return ListTile(
-    shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(20))),
+    //minLeadingWidth: 15,
     onTap: () {},
     onLongPress: () async {
       customShowDialog(
@@ -287,5 +300,6 @@ Widget _buildListOfProducts(BuildContext context, int index, String listId,
     },
     title: Text('${index + 1}. ${productDoc['name']}',
         style: const TextStyle(color: Colors.white)),
+    trailing: Text(userName, style: const TextStyle(fontSize: 12)),
   );
 }

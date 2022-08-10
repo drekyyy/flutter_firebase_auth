@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'sign_in_page.dart';
 import 'sign_up_page.dart';
@@ -8,6 +9,8 @@ class StartingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Uri _url =
+        Uri.parse('https://github.com/drekyyy/flutter_shopping_list');
     return Scaffold(
         body: Container(
             height: MediaQuery.of(context).size.height,
@@ -21,8 +24,15 @@ class StartingPage extends StatelessWidget {
                 const SizedBox(height: 30),
                 Flexible(
                     flex: 2,
-                    child: Image.asset("assets/images/app-icon.png",
-                        fit: BoxFit.contain, height: 55)),
+                    child: IconButton(
+                      iconSize: 55,
+                      icon: Image.asset("assets/images/app-icon.png"),
+                      onPressed: () async {
+                        if (await canLaunchUrl(_url)) {
+                          await launchUrl(_url);
+                        }
+                      },
+                    )),
                 Flexible(
                     fit: FlexFit.tight, flex: 10, child: Container(height: 10)),
                 Flexible(

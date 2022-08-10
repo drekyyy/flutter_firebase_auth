@@ -57,8 +57,9 @@ class DatabaseService {
     });
   }
 
-  static Future addProductToShoppingList(
-      String houseId, String shoppingListId, String productName) async {
+  static Future addProductToShoppingList(String houseId, String shoppingListId,
+      String productName, String userId) async {
+    String userName = await getUserName(userId);
     await FirebaseFirestore.instance
         .collection('houses')
         .doc(houseId)
@@ -66,7 +67,11 @@ class DatabaseService {
         .doc(shoppingListId)
         .collection('products')
         .doc()
-        .set({'name': productName});
+        .set({
+      'name': productName,
+      'createdByUid': userId,
+      'createdByName': userName
+    });
   }
 
   static Future deleteShoppingList(
@@ -124,6 +129,13 @@ class DatabaseService {
     snapshot =
         await FirebaseFirestore.instance.collection('users').doc(userid).get();
     return snapshot.data()['houseId'];
+  }
+
+  static Future getUserName(userid) async {
+    dynamic snapshot;
+    snapshot =
+        await FirebaseFirestore.instance.collection('users').doc(userid).get();
+    return snapshot.data()['name'];
   }
 
   static Future checkIfHouseExists(String houseId) async {
