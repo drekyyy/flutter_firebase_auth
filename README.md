@@ -1,4 +1,4 @@
-# flutter_shopping_list
+# flutter_shopping_list (POLISH VERSION FIRST, ENGLISH BELOW)
 
 Aplikacja mobilna na system Android w której użytkownicy znajdujący się w tym samym domu mogą tworzyć wiele list zakupów oraz dodawać do nich produkty. Aplikacja posiada powiadomienia push by podnieść jakość korzystania przez użytkownika z tej aplikacji.
 
@@ -56,7 +56,6 @@ Jeśli nie ty dodałeś produkt do listy, będzie on zawierał nazwe użytkownik
 
 # ENGLISH
 
-Aplikacja mobilna w której użytkownicy znajdujący się w tym samym domu (do którego można dołączyć podając house id), mogą tworzyć wiele list zakupów oraz dodawać do nich produkty. Aplikacja posiada powiadomienia push by podnieść jakość korzystania przez użytkownika z tej aplikacji.
 Mobile app for Android system, in which users that belong to the same "household" can create many shopping lists and add products to them. PUSH notifications are utilized to increase user engagement with this application.
 
 
@@ -88,7 +87,7 @@ Mobile app for Android system, in which users that belong to the same "household
 | ![](https://i.imgur.com/qNFYfU0.jpg)       | ![](https://i.imgur.com/PFlcP3S.jpg)       | ![](https://i.imgur.com/Hev47PH.jpg)       |
 
 Screenshots 4, 5, 6 are all from the main screen of logged in user `(home_page.dart)`. Here we can find all of our shopping lists with products displayed in neat cards.
-At the top of each shopping list, you can see when was it created, they are also numbered starting from #1 for the oldest (sorted by timestamp, ascending).
+At the top of each shopping list, you can see when it was created, they are also numbered starting from #1 for the oldest (sorted by timestamp, ascending).
 After pressing that area for some time `(onLongPress())`, an option to delete the shopping list will pop up. You can also obviously add products to the list.
 To delete the product you need to hold it for 1 second. If there are products added to the shopping list not by you, a name of user who added it will be visible on the right side of the product name.
 
