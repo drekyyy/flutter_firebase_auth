@@ -9,7 +9,7 @@ Aplikacja mobilna na system Android w której użytkownicy znajdujący się w ty
   - `provider: ^6.0.2`  (dostarcza id użytkownika między ekranami).
   - `cloud_firestore: ^3.1.9` (baza danych w chmurze).
   - `flutter_spinkit: ^5.1.0` (animacje ładowania np. gdy oczekujemy na dane z serwera firestore).
-  - `firebase_messaging: ^12.0.0` (push notifications, pobiera token urządzenia).
+  - `firebase_messaging: ^12.0.0` (push notifications, pobiera token urządzenia oraz umożliwia wysyłania prostych powiadomień z poziomu konsoli firebase).
   - `flutter_local_notifications: ^9.7.0` (push notifications, opcje wyświetlanie na urządzeniach).
   - `cloud_functions: ^3.3.3` (push notifications, funkcje w chmurze, umożliwiają programiście na customizacje powiadomień by reagowały one na zachowania w bazie danych (dodawanie/usuwanie/modyfikacja) ich).
   - `card_swiper: ^2.0.4` (umożliwają wyświetlanie danych w kartach).
@@ -65,9 +65,9 @@ Mobile app for Android system, in which users that belong to the same "household
   - `provider: ^6.0.2`  (provides user id for every screen that needs it).
   - `cloud_firestore: ^3.1.9` (cloud database).
   - `flutter_spinkit: ^5.1.0` (loading animations, e.g when waiting for data from cloud firestore to be fetched).
-  - `firebase_messaging: ^12.0.0` (push notifications, makes grabbing device token possible).
-  - `flutter_local_notifications: ^9.7.0` (push notifications, display options for devices).
-  - `cloud_functions: ^3.3.3` (push notifications, funkcje w chmurze, umożliwiają programiście na customizacje powiadomień by reagowały one na zachowania w bazie danych (dodawanie/usuwanie/modyfikacja) cloud functions that make it possible for developer to customize push notifications to react with our cloud database, eg send notificaiton on add/modify or data deletion).
+  - `firebase_messaging: ^12.0.0` (push notifications, makes grabbing device token and sending notifications from firebase console possible).
+  - `flutter_local_notifications: ^9.7.0` (push notifications - helps with display options for devices).
+  - `cloud_functions: ^3.3.3` (push notifications - cloud functions that make it possible for developer to customize push notifications to react with our cloud database, eg send notificaiton on add/modify or data deletion).
   - `card_swiper: ^2.0.4` (makes it possible to display data in interactive and clean lookin cards).
   - `url_launcher: ^6.1.5` (enables link opening, e.g when we click on icon button).
 
